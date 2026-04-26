@@ -2,6 +2,9 @@
 // Calls Gemini 5 times (once per check) and saves the full report to
 // data/cached-recommendations.json. After this, the demo endpoint serves
 // from that file — zero Gemini calls per demo view.
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
+
 import { resolve } from 'path';
 import { writeFileSync } from 'fs';
 import { runAudit } from '../lib/audit/index';

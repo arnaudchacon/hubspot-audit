@@ -1,1 +1,224 @@
-{}
+{
+  "generated_at": "2026-04-26T09:00:24.044Z",
+  "dataset_summary": {
+    "contacts": 50,
+    "deals": 12,
+    "workflows": 8
+  },
+  "overall_score": 55,
+  "score_interpretation": "Below median for B2B SaaS instances. Several issues are likely impacting reporting accuracy.",
+  "issues": [
+    {
+      "check_id": "duplicates",
+      "title": "Likely duplicate contacts detected",
+      "severity": "HIGH",
+      "detail": "Found 6 duplicate clusters covering 13 of 50 contacts.",
+      "raw_data": {
+        "cluster_count": 6,
+        "affected_contacts": 13,
+        "total_contacts": 50,
+        "sample_clusters": [
+          {
+            "contacts": [
+              {
+                "id": "c001",
+                "first_name": "Alex",
+                "last_name": "Martinez",
+                "email": "alex.martinez@stratosfinance.com",
+                "phone": "+1 415 555 0101",
+                "company_domain": "stratosfinance.com",
+                "owner_id": "u001",
+                "created_at": "2024-03-15"
+              },
+              {
+                "id": "c002",
+                "first_name": "Alexa",
+                "last_name": "Martinez",
+                "email": "alex.martinez@stratosfinance.com",
+                "phone": "415-555-0101",
+                "company_domain": "stratosfinance.com",
+                "owner_id": "u001",
+                "created_at": "2024-04-02"
+              },
+              {
+                "id": "c003",
+                "first_name": "Alex",
+                "last_name": "Martínez",
+                "email": "a.martinez@stratosfinance.com",
+                "phone": "+1 (415) 555 0101",
+                "company_domain": "stratosfinance.com",
+                "owner_id": null,
+                "created_at": "2024-04-08"
+              }
+            ]
+          },
+          {
+            "contacts": [
+              {
+                "id": "c004",
+                "first_name": "Sarah",
+                "last_name": "Chen",
+                "email": "sarah@meridiancap.io",
+                "phone": "+852 9123 4567",
+                "company_domain": "meridiancap.io",
+                "owner_id": "u002",
+                "created_at": "2024-01-22"
+              },
+              {
+                "id": "c005",
+                "first_name": "Sara",
+                "last_name": "Chen",
+                "email": "sarah.chen@meridiancap.io",
+                "phone": "+852 9123 4567",
+                "company_domain": "meridiancap.io",
+                "owner_id": "u002",
+                "created_at": "2024-02-11"
+              }
+            ]
+          },
+          {
+            "contacts": [
+              {
+                "id": "c006",
+                "first_name": "James",
+                "last_name": "OBrien",
+                "email": "j.obrien@nordpay.eu",
+                "phone": "0033612345678",
+                "company_domain": "nordpay.eu",
+                "owner_id": "u003",
+                "created_at": "2023-11-05"
+              },
+              {
+                "id": "c007",
+                "first_name": "James",
+                "last_name": "O'Brien",
+                "email": "james.obrien@nordpay.eu",
+                "phone": "+33 6 12 34 56 78",
+                "company_domain": "nordpay.eu",
+                "owner_id": null,
+                "created_at": "2024-05-19"
+              }
+            ]
+          }
+        ]
+      },
+      "ai_recommendation": "Manually merge the 13 affected contacts to resolve likely duplicates. Go to a contact record, click Actions, then \"Merge\". Select the duplicate contact and confirm. HubSpot's native duplicate tool (Professional/Enterprise only) won't catch these fuzzy matches. This fix will take about 1-2 hours. Regular manual review prevents data decay and ensures accurate reporting."
+    },
+    {
+      "check_id": "owners",
+      "title": "Contacts missing owner assignment",
+      "severity": "HIGH",
+      "detail": "13 of 50 contacts (26%) have no owner assigned.",
+      "raw_data": {
+        "missing_count": 13,
+        "total_count": 50,
+        "percentage": 26,
+        "sample_orphans": [
+          {
+            "name": "Alex Martínez",
+            "email": "a.martinez@stratosfinance.com",
+            "created_at": "2024-04-08"
+          },
+          {
+            "name": "James O'Brien",
+            "email": "james.obrien@nordpay.eu",
+            "created_at": "2024-05-19"
+          },
+          {
+            "name": "Marc Hoffmann",
+            "email": "m.hoffmann@bayernlogistik.de",
+            "created_at": "2024-07-04"
+          },
+          {
+            "name": "Sophie Laurent",
+            "email": "sophie.laurent@vivariofintech.fr",
+            "created_at": "2024-04-22"
+          },
+          {
+            "name": "Hassan Khalil",
+            "email": "hassan@gulfstreamcap.ae",
+            "created_at": "2024-06-30"
+          }
+        ]
+      },
+      "ai_recommendation": "Assign owners to the 13 contacts missing one. Create a contact view for \"Contact owner is unknown\" and manually assign them. For ongoing automation, set a default owner on all forms (Marketing > Forms > [Form Name] > Automations > Send form submission notifications) or use Workflows (paid tiers) to assign owners automatically, including round-robin. This fix should take about 1 hour. Consistent ownership improves reporting and follow-up."
+    },
+    {
+      "check_id": "workflows",
+      "title": "Inactive workflows still marked active",
+      "severity": "MEDIUM",
+      "detail": "3 active workflows have had zero enrollments in the last 30 days.",
+      "raw_data": {
+        "zombie_count": 3,
+        "total_active": 8,
+        "zombie_workflows": [
+          {
+            "name": "Re-Engagement — Cold Leads (60 days)",
+            "last_enrollment": "2025-08-14"
+          },
+          {
+            "name": "Webinar Q4 2024 Follow-Up",
+            "last_enrollment": "2024-12-18"
+          },
+          {
+            "name": "Old Sales Onboarding Flow (legacy)",
+            "last_enrollment": "2024-06-30"
+          }
+        ]
+      },
+      "ai_recommendation": "Pause any workflows that haven't enrolled contacts in over 30 days. Navigate to Automation > Workflows, then filter by \"Active\" status. Review \"Re-Engagement — Cold Leads (60 days)\", \"Webinar Q4 2024 Follow-Up\", and \"Old Sales Onboarding Flow (legacy)\". Pausing prevents unintended actions and frees up your workflow limit if you're on Marketing Professional. This should take about 0.5 hours. Cleaner workflows mean less confusion and better system performance."
+    },
+    {
+      "check_id": "stale_deals",
+      "title": "Stale deals in active pipeline",
+      "severity": "MEDIUM",
+      "detail": "4 deals in active stages haven't had activity in over 90 days. Total ARR at risk: $309k.",
+      "raw_data": {
+        "stale_count": 4,
+        "arr_at_risk_usd": 309000,
+        "days_oldest": 147,
+        "sample_deals": [
+          {
+            "name": "Nord Pay — Enterprise",
+            "stage": "qualification",
+            "amount": 96000,
+            "days_inactive": 132
+          },
+          {
+            "name": "Bayern Logistik — Trial Extension",
+            "stage": "proposal",
+            "amount": 18000,
+            "days_inactive": 108
+          },
+          {
+            "name": "Helix Sec — Enterprise",
+            "stage": "proposal",
+            "amount": 85000,
+            "days_inactive": 147
+          }
+        ]
+      },
+      "ai_recommendation": "Review deals with no activity in 90+ days and move them to a \"Closed Lost\" or \"On Hold\" stage. Create a custom deal property called \"Last Activity Date\" (Settings > Properties > Manage) and use it to build a \"Stale Deals\" view. For Sales Pro/Enterprise, set up automated reminders for inactive deals. This takes about 2 hours. This will improve forecast accuracy and pipeline health."
+    },
+    {
+      "check_id": "phone_format",
+      "title": "Inconsistent phone number formats",
+      "severity": "LOW",
+      "detail": "2 different phone number formats are in use across your contacts.",
+      "raw_data": {
+        "format_distribution": {
+          "plus_format": 43,
+          "no_prefix": 1,
+          "double_zero": 6
+        },
+        "significant_bucket_count": 2,
+        "examples": {
+          "plus_format": "+1 415 555 0101",
+          "double_zero": "0033612345678",
+          "no_prefix": "415-555-0101"
+        }
+      },
+      "ai_recommendation": "Standardize phone numbers to E.164 format (+CountryCodeDigits). Export contacts with phone numbers, clean the data in a spreadsheet, then re-import. For ongoing normalization, Operations Hub Starter or higher can automate this with workflows. Without Operations Hub, new records will require manual formatting. This one-time cleanup takes about 2 hours. Consistent phone formats improve calling, SMS, and segmentation."
+    }
+  ]
+}
