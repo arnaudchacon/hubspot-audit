@@ -62,6 +62,17 @@ const config: Config = {
         hero:    "768px",
       },
 
+      // ─── Animations ───────────────────────────────────────────────────────
+      keyframes: {
+        'fade-in-up': {
+          from: { opacity: '0', transform: 'translateY(6px)' },
+          to:   { opacity: '1', transform: 'translateY(0)'   },
+        },
+      },
+      animation: {
+        'fade-in': 'fade-in-up 200ms ease-out both',
+      },
+
       // ─── Shadows (only floating/hover elements; static cards use borders) ─
       boxShadow: {
         floating: "0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)",
