@@ -1,8 +1,7 @@
 'use client';
 
 import { Suspense, useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import type { AuditReport } from '@/lib/audit/types';
 import { AuditReport as AuditReportView } from '@/components/AuditReport';
 
@@ -20,21 +19,29 @@ function Spinner() {
 function AuditContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const source = searchParams.get('source');
+  const source = searchParams.get('source') as 'demo' | 'upload' | null;
 
   const [report, setReport] = useState<AuditReport | null>(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (source !== 'demo') {
-      router.replace('/');
-      return;
-    }
+    if (source === 'demo') {
+      fetch('/api/audit-demo')
+        .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+        .then((data: AuditReport) => setReport(data))
+        .catch(() => setError(true));
 
-    fetch('/api/audit-demo')
-      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-      .then((data: AuditReport) => setReport(data))
-      .catch(() => setError(true));
+    } else if (source === 'upload') {
+      const stored = sessionStorage.getItem('upload-report');
+      if (stored) {
+        setReport(JSON.parse(stored));
+      } else {
+        router.replace('/');
+      }
+
+    } else {
+      router.replace('/');
+    }
   }, [source, router]);
 
   if (error) {
@@ -47,7 +54,7 @@ function AuditContent() {
 
   if (!report) return <Spinner />;
 
-  return <AuditReportView report={report} />;
+  return <AuditReportView report={report} source={source ?? 'demo'} />;
 }
 
 export default function AuditPage() {

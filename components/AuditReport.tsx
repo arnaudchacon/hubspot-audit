@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 
 interface AuditReportProps {
   report: AuditReport;
+  source: 'demo' | 'upload';
 }
 
 function formatDate(iso: string): string {
@@ -16,7 +17,7 @@ function formatDate(iso: string): string {
   });
 }
 
-export function AuditReport({ report }: AuditReportProps) {
+export function AuditReport({ report, source }: AuditReportProps) {
   const { overall_score, score_interpretation, dataset_summary, issues, generated_at } = report;
 
   return (
@@ -26,7 +27,7 @@ export function AuditReport({ report }: AuditReportProps) {
         {/* Header */}
         <div className="mb-12">
           <p className="text-caption text-text-tertiary uppercase tracking-[0.05em] mb-3">
-            Generated {formatDate(generated_at)} · Demo dataset
+            Generated {formatDate(generated_at)} · {source === 'demo' ? 'Demo dataset' : 'Your dataset'}
           </p>
           <h1 className="text-h1 text-text-primary">Audit Report</h1>
         </div>
@@ -60,7 +61,9 @@ export function AuditReport({ report }: AuditReportProps) {
         {/* Footer */}
         <div className="pt-8 border-t border-border flex items-center justify-between">
           <p className="text-body text-text-secondary">
-            This used a demo dataset. Upload your own CSV to audit your actual instance.
+            {source === 'demo'
+              ? 'This used a demo dataset. Upload your own CSV to audit your actual instance.'
+              : 'Want to audit a different dataset?'}
           </p>
           <Link href="/">
             <Button variant="secondary">← Back</Button>
