@@ -234,7 +234,7 @@ export function UploadDropzone({ onClose }: UploadDropzoneProps) {
         {errors.length > 0 && (
           <div className="mt-4 p-4 bg-severity-high-bg border border-severity-high rounded-lg">
             <p className="text-body-sm text-severity-high font-medium mb-2">
-              We couldn't process this file. Issues found:
+              We couldn&apos;t process this file. Issues found:
             </p>
             <ul className="space-y-1">
               {errors.map((e, i) => (
