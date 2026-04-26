@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cache-demo": "tsx --env-file=.env.local scripts/cache-demo-recommendations.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
