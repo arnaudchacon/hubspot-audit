@@ -1,4 +1,15 @@
-import type { Workflow, AuditIssue, Severity } from '@/lib/audit/types';
+import type { Workflow, AuditIssue, Severity, WorkflowsRawData } from '@/lib/audit/types';
+
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+function classifyWorkflowName(name: string): WorkflowsRawData['zombie_full_list'][number]['name_pattern_hint'] {
+  const lower = name.toLowerCase();
+  if (/q[1-4]\s*20\d{2}|20\d{2}/.test(lower)) return 'expired_campaign';
+  if (/old|legacy|v1|deprecated|backup/.test(lower)) return 'deprecated';
+  if (/webinar|event|conference|launch/.test(lower)) return 'one_time_event';
+  if (/test|trial|beta/.test(lower)) return 'experiment';
+  return 'unknown';
+}
 
 export function checkWorkflows(workflows: Workflow[]): AuditIssue | null {
   const active = workflows.filter(w => w.is_active);
@@ -19,6 +30,15 @@ export function checkWorkflows(workflows: Workflow[]): AuditIssue | null {
     severity = 'LOW';
   }
 
+  const now = Date.now();
+
+  const zombieFullList: WorkflowsRawData['zombie_full_list'] = zombies.map(w => ({
+    name: w.name,
+    last_enrollment_date: w.last_enrollment_date,
+    days_since_enrollment: Math.floor((now - new Date(w.last_enrollment_date).getTime()) / MS_PER_DAY),
+    name_pattern_hint: classifyWorkflowName(w.name),
+  }));
+
   return {
     check_id: 'workflows',
     title: 'Inactive workflows still marked active',
@@ -31,6 +51,7 @@ export function checkWorkflows(workflows: Workflow[]): AuditIssue | null {
         name: w.name,
         last_enrollment: w.last_enrollment_date,
       })),
+      zombie_full_list: zombieFullList,
     },
   };
 }

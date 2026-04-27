@@ -1,5 +1,5 @@
 import { levenshtein } from '@/lib/levenshtein';
-import type { Contact, AuditIssue, Severity } from '@/lib/audit/types';
+import type { Contact, AuditIssue, Severity, DuplicatesRawData } from '@/lib/audit/types';
 
 function normalizeName(contact: Contact): string {
   return (contact.first_name + ' ' + contact.last_name)
@@ -81,6 +81,33 @@ export function checkDuplicates(contacts: Contact[]): AuditIssue | null {
 
   const severity: Severity = clusterCount > 5 ? 'HIGH' : clusterCount > 2 ? 'MEDIUM' : 'LOW';
 
+  const sortedClusters = [...clusters].sort((a, b) => b.length - a.length).slice(0, 5);
+
+  const fullClusters: DuplicatesRawData['full_clusters'] = sortedClusters.map((ids, idx) => {
+    const clusterContacts = ids.map(id => contactsById[id]);
+    const names = clusterContacts.map(c => normalizeName(c));
+    const emailLocals = clusterContacts.map(c => emailLocal(c.email));
+    const domains = clusterContacts.map(c => c.company_domain);
+    const phones = clusterContacts.map(c => lastEightDigits(c.phone));
+    return {
+      cluster_id: `cluster_${idx + 1}`,
+      contact_ids: ids,
+      contacts: clusterContacts.map(c => ({
+        id: c.id,
+        name: `${c.first_name} ${c.last_name}`,
+        email: c.email,
+        domain: c.company_domain,
+        phone_normalized: lastEightDigits(c.phone),
+      })),
+      similarity_signals: {
+        name_varies: new Set(names).size > 1,
+        email_local_varies: new Set(emailLocals).size > 1,
+        domain_matches: new Set(domains).size === 1,
+        phone_matches: phones[0] !== '' && new Set(phones).size === 1,
+      },
+    };
+  });
+
   return {
     check_id: 'duplicates',
     title: 'Likely duplicate contacts detected',
@@ -93,6 +120,7 @@ export function checkDuplicates(contacts: Contact[]): AuditIssue | null {
       sample_clusters: clusters.slice(0, 3).map(ids => ({
         contacts: ids.map(id => contactsById[id]),
       })),
+      full_clusters: fullClusters,
     },
   };
 }

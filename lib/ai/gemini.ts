@@ -12,9 +12,9 @@ function getModel() {
     _model = genAI.getGenerativeModel({
       model: 'gemini-2.5-flash',
       generationConfig: {
-        temperature: 0.4,
-        topP: 0.85,
-        maxOutputTokens: 2048,
+        temperature: 0.5,
+        topP: 0.9,
+        maxOutputTokens: 350,
         // Disable thinking mode — recommendations are short structured text,
         // not reasoning tasks. Thinking tokens eat into the output budget and
         // cause truncation at lower maxOutputTokens values.

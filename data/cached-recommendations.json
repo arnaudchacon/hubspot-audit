@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-26T09:00:24.044Z",
+  "generated_at": "2026-04-27T08:33:04.599Z",
   "dataset_summary": {
     "contacts": 50,
     "deals": 12,
@@ -100,9 +100,164 @@
               }
             ]
           }
+        ],
+        "full_clusters": [
+          {
+            "cluster_id": "cluster_1",
+            "contact_ids": [
+              "c001",
+              "c002",
+              "c003"
+            ],
+            "contacts": [
+              {
+                "id": "c001",
+                "name": "Alex Martinez",
+                "email": "alex.martinez@stratosfinance.com",
+                "domain": "stratosfinance.com",
+                "phone_normalized": "55550101"
+              },
+              {
+                "id": "c002",
+                "name": "Alexa Martinez",
+                "email": "alex.martinez@stratosfinance.com",
+                "domain": "stratosfinance.com",
+                "phone_normalized": "55550101"
+              },
+              {
+                "id": "c003",
+                "name": "Alex Martínez",
+                "email": "a.martinez@stratosfinance.com",
+                "domain": "stratosfinance.com",
+                "phone_normalized": "55550101"
+              }
+            ],
+            "similarity_signals": {
+              "name_varies": true,
+              "email_local_varies": true,
+              "domain_matches": true,
+              "phone_matches": true
+            }
+          },
+          {
+            "cluster_id": "cluster_2",
+            "contact_ids": [
+              "c004",
+              "c005"
+            ],
+            "contacts": [
+              {
+                "id": "c004",
+                "name": "Sarah Chen",
+                "email": "sarah@meridiancap.io",
+                "domain": "meridiancap.io",
+                "phone_normalized": "91234567"
+              },
+              {
+                "id": "c005",
+                "name": "Sara Chen",
+                "email": "sarah.chen@meridiancap.io",
+                "domain": "meridiancap.io",
+                "phone_normalized": "91234567"
+              }
+            ],
+            "similarity_signals": {
+              "name_varies": true,
+              "email_local_varies": true,
+              "domain_matches": true,
+              "phone_matches": true
+            }
+          },
+          {
+            "cluster_id": "cluster_3",
+            "contact_ids": [
+              "c006",
+              "c007"
+            ],
+            "contacts": [
+              {
+                "id": "c006",
+                "name": "James OBrien",
+                "email": "j.obrien@nordpay.eu",
+                "domain": "nordpay.eu",
+                "phone_normalized": "12345678"
+              },
+              {
+                "id": "c007",
+                "name": "James O'Brien",
+                "email": "james.obrien@nordpay.eu",
+                "domain": "nordpay.eu",
+                "phone_normalized": "12345678"
+              }
+            ],
+            "similarity_signals": {
+              "name_varies": true,
+              "email_local_varies": true,
+              "domain_matches": true,
+              "phone_matches": true
+            }
+          },
+          {
+            "cluster_id": "cluster_4",
+            "contact_ids": [
+              "c008",
+              "c009"
+            ],
+            "contacts": [
+              {
+                "id": "c008",
+                "name": "Priya Sharma",
+                "email": "priya.sharma@accentaiventures.com",
+                "domain": "accentaiventures.com",
+                "phone_normalized": "76543210"
+              },
+              {
+                "id": "c009",
+                "name": "Priya Sharma",
+                "email": "priya@accentaiventures.com",
+                "domain": "accentaiventures.com",
+                "phone_normalized": "76543210"
+              }
+            ],
+            "similarity_signals": {
+              "name_varies": false,
+              "email_local_varies": true,
+              "domain_matches": true,
+              "phone_matches": true
+            }
+          },
+          {
+            "cluster_id": "cluster_5",
+            "contact_ids": [
+              "c010",
+              "c011"
+            ],
+            "contacts": [
+              {
+                "id": "c010",
+                "name": "Marcus Hoffmann",
+                "email": "marcus.hoffmann@bayernlogistik.de",
+                "domain": "bayernlogistik.de",
+                "phone_normalized": "01234567"
+              },
+              {
+                "id": "c011",
+                "name": "Marc Hoffmann",
+                "email": "m.hoffmann@bayernlogistik.de",
+                "domain": "bayernlogistik.de",
+                "phone_normalized": "01234567"
+              }
+            ],
+            "similarity_signals": {
+              "name_varies": true,
+              "email_local_varies": true,
+              "domain_matches": true,
+              "phone_matches": true
+            }
+          }
         ]
       },
-      "ai_recommendation": "Manually merge the 13 affected contacts to resolve likely duplicates. Go to a contact record, click Actions, then \"Merge\". Select the duplicate contact and confirm. HubSpot's native duplicate tool (Professional/Enterprise only) won't catch these fuzzy matches. This fix will take about 1-2 hours. Regular manual review prevents data decay and ensures accurate reporting."
+      "ai_recommendation": "ROOT CAUSE: These duplicates, like Alex Martinez and Alexa Martinez, likely stem from multiple data entry points (e.g., forms, imports) that don't check for existing contacts with similar names or email domains, allowing slight variations to create new records.\n\nFIRST STEP: Go to Contacts > Contacts, filter by 'Create date' for the last 30 days, and manually merge any obvious duplicates you find. For Free/Starter users, this is your only option; Pro/Enterprise users should also check the 'Manage Duplicates' tool under Contacts.\n\nWATCH FOR: Don't just merge without looking at your forms or import processes; the same intake path that created \"Sarah Chen\" and \"Sara Chen\" will just make new duplicates next week."
     },
     {
       "check_id": "owners",
@@ -139,9 +294,46 @@
             "email": "hassan@gulfstreamcap.ae",
             "created_at": "2024-06-30"
           }
-        ]
+        ],
+        "orphans_recent_5": [
+          {
+            "name": "Tomás Silva",
+            "email": "tomas@saopaulodefi.br",
+            "created_at": "2024-07-15",
+            "days_old": 651
+          },
+          {
+            "name": "Mei Lin",
+            "email": "mei.lin@taipeicapital.tw",
+            "created_at": "2024-07-08",
+            "days_old": 658
+          },
+          {
+            "name": "Marc Hoffmann",
+            "email": "m.hoffmann@bayernlogistik.de",
+            "created_at": "2024-07-04",
+            "days_old": 662
+          },
+          {
+            "name": "Hassan Khalil",
+            "email": "hassan@gulfstreamcap.ae",
+            "created_at": "2024-06-30",
+            "days_old": 666
+          },
+          {
+            "name": "Aaron Mitchell",
+            "email": "aaron.m@aucklandbio.nz",
+            "created_at": "2024-06-25",
+            "days_old": 671
+          }
+        ],
+        "date_distribution": {
+          "last_30_days": 0,
+          "last_90_days": 0,
+          "older": 13
+        }
       },
-      "ai_recommendation": "Assign owners to the 13 contacts missing one. Create a contact view for \"Contact owner is unknown\" and manually assign them. For ongoing automation, set a default owner on all forms (Marketing > Forms > [Form Name] > Automations > Send form submission notifications) or use Workflows (paid tiers) to assign owners automatically, including round-robin. This fix should take about 1 hour. Consistent ownership improves reporting and follow-up."
+      "ai_recommendation": "ROOT CAUSE: These 13 orphaned contacts, like Tomás Silva, are all older than 90 days, which points to accumulated drift from previous intake channels or owner deactivations, not a currently broken form or API integration.\n\nFIRST STEP: Filter your contacts for \"Contact owner is unknown\" and bulk assign them to the correct owner using the \"Assign owner\" bulk action. For Free/Starter users, this is the only way to fix existing records.\n\nWATCH FOR: Don't try to guess the original owner based on old activity logs; just assign them to the current SDR or AE responsible for their company's region or industry."
     },
     {
       "check_id": "workflows",
@@ -164,9 +356,29 @@
             "name": "Old Sales Onboarding Flow (legacy)",
             "last_enrollment": "2024-06-30"
           }
+        ],
+        "zombie_full_list": [
+          {
+            "name": "Re-Engagement — Cold Leads (60 days)",
+            "last_enrollment_date": "2025-08-14",
+            "days_since_enrollment": 256,
+            "name_pattern_hint": "deprecated"
+          },
+          {
+            "name": "Webinar Q4 2024 Follow-Up",
+            "last_enrollment_date": "2024-12-18",
+            "days_since_enrollment": 495,
+            "name_pattern_hint": "expired_campaign"
+          },
+          {
+            "name": "Old Sales Onboarding Flow (legacy)",
+            "last_enrollment_date": "2024-06-30",
+            "days_since_enrollment": 666,
+            "name_pattern_hint": "deprecated"
+          }
         ]
       },
-      "ai_recommendation": "Pause any workflows that haven't enrolled contacts in over 30 days. Navigate to Automation > Workflows, then filter by \"Active\" status. Review \"Re-Engagement — Cold Leads (60 days)\", \"Webinar Q4 2024 Follow-Up\", and \"Old Sales Onboarding Flow (legacy)\". Pausing prevents unintended actions and frees up your workflow limit if you're on Marketing Professional. This should take about 0.5 hours. Cleaner workflows mean less confusion and better system performance."
+      "ai_recommendation": "ROOT CAUSE: Workflows like \"Webinar Q4 2024 Follow-Up\" were left active after their campaign or purpose ended, cluttering the instance and potentially hitting workflow limits.\n\nFIRST STEP: Go to Automation > Workflows, filter by \"Active,\" and pause \"Webinar Q4 2024 Follow-Up\" and \"Old Sales Onboarding Flow (legacy).\" You can always reactivate them if needed; pausing is reversible.\n\nWATCH FOR: Don't delete workflows immediately; you lose all enrollment history. Pause them first, then check again in 90 days to confirm they're truly dead before deleting."
     },
     {
       "check_id": "stale_deals",
@@ -176,29 +388,59 @@
       "raw_data": {
         "stale_count": 4,
         "arr_at_risk_usd": 309000,
-        "days_oldest": 147,
+        "days_oldest": 148,
         "sample_deals": [
           {
             "name": "Nord Pay — Enterprise",
             "stage": "qualification",
             "amount": 96000,
-            "days_inactive": 132
+            "days_inactive": 133
           },
           {
             "name": "Bayern Logistik — Trial Extension",
             "stage": "proposal",
             "amount": 18000,
-            "days_inactive": 108
+            "days_inactive": 109
           },
           {
             "name": "Helix Sec — Enterprise",
             "stage": "proposal",
             "amount": 85000,
-            "days_inactive": 147
+            "days_inactive": 148
+          }
+        ],
+        "stale_full_list": [
+          {
+            "name": "Shanghai Quant — Strategic",
+            "stage": "qualification",
+            "amount_usd": 110000,
+            "days_inactive": 126,
+            "deal_type_hint": "enterprise"
+          },
+          {
+            "name": "Nord Pay — Enterprise",
+            "stage": "qualification",
+            "amount_usd": 96000,
+            "days_inactive": 133,
+            "deal_type_hint": "enterprise"
+          },
+          {
+            "name": "Helix Sec — Enterprise",
+            "stage": "proposal",
+            "amount_usd": 85000,
+            "days_inactive": 148,
+            "deal_type_hint": "enterprise"
+          },
+          {
+            "name": "Bayern Logistik — Trial Extension",
+            "stage": "proposal",
+            "amount_usd": 18000,
+            "days_inactive": 109,
+            "deal_type_hint": "pilot"
           }
         ]
       },
-      "ai_recommendation": "Review deals with no activity in 90+ days and move them to a \"Closed Lost\" or \"On Hold\" stage. Create a custom deal property called \"Last Activity Date\" (Settings > Properties > Manage) and use it to build a \"Stale Deals\" view. For Sales Pro/Enterprise, set up automated reminders for inactive deals. This takes about 2 hours. This will improve forecast accuracy and pipeline health."
+      "ai_recommendation": "ROOT CAUSE: Sales reps aren't closing out deals they've stopped working, like \"Shanghai Quant — Strategic,\" which has been inactive for 126 days, inflating the active pipeline.\n\nFIRST STEP: Create a \"Stale Deal Cleanup\" workflow (Automation > Workflows) that moves deals inactive for over 90 days to a new custom \"On Hold\" stage. This keeps the deal record but removes it from active forecasts.\n\nWATCH FOR: Reps will push back on moving deals to \"Closed Lost\" because it impacts their metrics; an \"On Hold\" stage is a good compromise, but make sure they still add a reason to the deal record why it's there."
     },
     {
       "check_id": "phone_format",
@@ -216,9 +458,29 @@
           "plus_format": "+1 415 555 0101",
           "double_zero": "0033612345678",
           "no_prefix": "415-555-0101"
-        }
+        },
+        "format_examples_with_counts": [
+          {
+            "format": "plus_format",
+            "count": 43,
+            "examples": [
+              "+1 415 555 0101",
+              "+1 (415) 555 0101"
+            ],
+            "description": "+CountryCode style (e.g. +1 415 555 0101)"
+          },
+          {
+            "format": "double_zero",
+            "count": 6,
+            "examples": [
+              "0033612345678",
+              "0035318765432"
+            ],
+            "description": "00CountryCode style (e.g. 0033 6 12 34 56)"
+          }
+        ]
       },
-      "ai_recommendation": "Standardize phone numbers to E.164 format (+CountryCodeDigits). Export contacts with phone numbers, clean the data in a spreadsheet, then re-import. For ongoing normalization, Operations Hub Starter or higher can automate this with workflows. Without Operations Hub, new records will require manual formatting. This one-time cleanup takes about 2 hours. Consistent phone formats improve calling, SMS, and segmentation."
+      "ai_recommendation": "ROOT CAUSE: HubSpot doesn't normalize phone formats on import, so the mix of `plus_format` and `double_zero` suggests uncoordinated intake channels, likely CSV imports or forms without strict validation.\n\nFIRST STEP: If you have Operations Hub Starter or higher, build a workflow (Automation > Workflows) that triggers on \"Phone Number is known\" and uses the \"Format data\" action to set the phone number property to E.164. Otherwise, export contacts with phone numbers, clean them to E.164 format, and re-import.\n\nWATCH FOR: Manually cleaning these 49 contacts via individual record edits is a waste of time; you'll just get new bad data next week. Focus on the source."
     }
   ]
 }

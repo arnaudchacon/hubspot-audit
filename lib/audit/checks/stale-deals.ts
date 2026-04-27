@@ -1,4 +1,4 @@
-import type { Deal, AuditIssue, Severity } from '@/lib/audit/types';
+import type { Deal, AuditIssue, Severity, StaleDealsRawData } from '@/lib/audit/types';
 
 const ACTIVE_STAGES = ['discovery', 'qualification', 'proposal', 'negotiation'];
 
@@ -6,6 +6,15 @@ function formatAmount(usd: number): string {
   if (usd >= 1_000_000) return `${(usd / 1_000_000).toFixed(1)}M`;
   if (usd >= 1_000) return `${Math.round(usd / 1_000)}k`;
   return String(usd);
+}
+
+function classifyDealName(name: string): StaleDealsRawData['stale_full_list'][number]['deal_type_hint'] {
+  const lower = name.toLowerCase();
+  if (/pilot|trial|poc/.test(lower)) return 'pilot';
+  if (/enterprise|strategic/.test(lower)) return 'enterprise';
+  if (/year 1|annual|yearly/.test(lower)) return 'annual_renewal';
+  if (/expansion|upsell/.test(lower)) return 'expansion';
+  return 'standard';
 }
 
 export function checkStaleDeals(deals: Deal[]): AuditIssue | null {
@@ -36,6 +45,19 @@ export function checkStaleDeals(deals: Deal[]): AuditIssue | null {
     severity = 'LOW';
   }
 
+  const staleFullList: StaleDealsRawData['stale_full_list'] = [...stale]
+    .sort((a, b) => b.amount_usd - a.amount_usd)
+    .slice(0, 5)
+    .map(d => ({
+      name: d.name,
+      stage: d.stage,
+      amount_usd: d.amount_usd,
+      days_inactive: Math.floor(
+        (Date.now() - new Date(d.last_activity_date).getTime()) / (1000 * 60 * 60 * 24)
+      ),
+      deal_type_hint: classifyDealName(d.name),
+    }));
+
   return {
     check_id: 'stale_deals',
     title: 'Stale deals in active pipeline',
@@ -53,6 +75,7 @@ export function checkStaleDeals(deals: Deal[]): AuditIssue | null {
           (Date.now() - new Date(d.last_activity_date).getTime()) / (1000 * 60 * 60 * 24)
         ),
       })),
+      stale_full_list: staleFullList,
     },
   };
 }
