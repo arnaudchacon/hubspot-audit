@@ -10,8 +10,25 @@ export function Hero() {
 
   return (
     <>
-      <main className="min-h-screen bg-bg flex items-center justify-center px-6 py-24">
-        <div className="w-full max-w-hero flex flex-col items-start gap-6">
+      <main className="min-h-screen bg-bg flex items-center justify-center px-6 py-24 relative overflow-hidden">
+
+        {/* Ambient orb — warm amber, top-left */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            top: '-10%',
+            left: '-15%',
+            width: '680px',
+            height: '680px',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(200,90,20,0.13) 0%, rgba(200,90,20,0.05) 45%, transparent 70%)',
+            filter: 'blur(40px)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        <div className="w-full max-w-hero flex flex-col items-start gap-6 relative">
 
           <p className="text-caption text-text-tertiary uppercase tracking-[0.05em]">
             FIG 0.1 — A CRM AUDIT TOOL
