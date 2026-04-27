@@ -17,13 +17,13 @@ export function Hero() {
           aria-hidden="true"
           style={{
             position: 'absolute',
-            top: '-10%',
-            left: '-15%',
-            width: '680px',
-            height: '680px',
+            top: '-20%',
+            left: '-5%',
+            width: '860px',
+            height: '860px',
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(200,90,20,0.13) 0%, rgba(200,90,20,0.05) 45%, transparent 70%)',
-            filter: 'blur(40px)',
+            background: 'radial-gradient(circle, rgba(200,90,20,0.22) 0%, rgba(200,90,20,0.09) 45%, transparent 70%)',
+            filter: 'blur(48px)',
             pointerEvents: 'none',
           }}
         />
