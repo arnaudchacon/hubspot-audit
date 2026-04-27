@@ -5,6 +5,7 @@ import { AffectedRecords } from '@/components/affected-records/AffectedRecords';
 interface IssueCardProps {
   issue: AuditIssue;
   index: number;
+  onViewRecords: () => void;
 }
 
 const SECTION_KEYS = ['ROOT CAUSE', 'FIRST STEP', 'WATCH FOR'] as const;
@@ -28,7 +29,7 @@ function parseRecommendation(text: string): Array<{ label: SectionKey; content: 
   });
 }
 
-export function IssueCard({ issue, index }: IssueCardProps) {
+export function IssueCard({ issue, index, onViewRecords }: IssueCardProps) {
   const sections = issue.ai_recommendation ? parseRecommendation(issue.ai_recommendation) : null;
 
   return (
@@ -69,7 +70,7 @@ export function IssueCard({ issue, index }: IssueCardProps) {
         </div>
       )}
 
-      <AffectedRecords issue={issue} />
+      <AffectedRecords issue={issue} onOpen={onViewRecords} />
     </div>
   );
 }

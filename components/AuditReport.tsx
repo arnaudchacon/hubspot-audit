@@ -1,6 +1,10 @@
-import type { AuditReport } from '@/lib/audit/types';
+'use client';
+
+import { useState } from 'react';
+import type { AuditReport, AuditIssue } from '@/lib/audit/types';
 import { Score } from '@/components/ui/Score';
 import { IssueCard } from '@/components/IssueCard';
+import { DrawerPanel } from '@/components/affected-records/DrawerPanel';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 
@@ -19,6 +23,7 @@ function formatDate(iso: string): string {
 
 export function AuditReport({ report, source }: AuditReportProps) {
   const { overall_score, score_interpretation, dataset_summary, issues, generated_at } = report;
+  const [openIssue, setOpenIssue] = useState<AuditIssue | null>(null);
 
   return (
     <main className="min-h-screen bg-bg">
@@ -54,7 +59,12 @@ export function AuditReport({ report, source }: AuditReportProps) {
 
         <div className="flex flex-col gap-4 mb-16">
           {issues.map((issue, i) => (
-            <IssueCard key={issue.check_id} issue={issue} index={i} />
+            <IssueCard
+              key={issue.check_id}
+              issue={issue}
+              index={i}
+              onViewRecords={() => setOpenIssue(issue)}
+            />
           ))}
         </div>
 
@@ -71,6 +81,7 @@ export function AuditReport({ report, source }: AuditReportProps) {
         </div>
 
       </div>
+      <DrawerPanel issue={openIssue} onClose={() => setOpenIssue(null)} />
     </main>
   );
 }
