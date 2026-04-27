@@ -1,5 +1,6 @@
 import type { AuditIssue } from '@/lib/audit/types';
 import { Badge } from '@/components/ui/Badge';
+import { AffectedRecords } from '@/components/affected-records/AffectedRecords';
 
 interface IssueCardProps {
   issue: AuditIssue;
@@ -67,6 +68,8 @@ export function IssueCard({ issue, index }: IssueCardProps) {
           )}
         </div>
       )}
+
+      <AffectedRecords issue={issue} />
     </div>
   );
 }
