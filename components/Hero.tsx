@@ -12,7 +12,7 @@ export function Hero() {
     <>
       <main className="min-h-screen bg-bg flex items-center justify-center px-6 py-24 relative overflow-hidden">
 
-        {/* Ambient orb — warm amber, top-left */}
+        {/* Orb A — top-left, large, 18s drift */}
         <div
           aria-hidden="true"
           style={{
@@ -25,6 +25,24 @@ export function Hero() {
             background: 'radial-gradient(circle, rgba(200,90,20,0.22) 0%, rgba(200,90,20,0.09) 45%, transparent 70%)',
             filter: 'blur(48px)',
             pointerEvents: 'none',
+            animation: 'orb-drift-a 18s ease-in-out infinite',
+          }}
+        />
+
+        {/* Orb B — bottom-right, smaller, 14s drift */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            bottom: '-20%',
+            right: '-10%',
+            width: '620px',
+            height: '620px',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(200,90,20,0.16) 0%, rgba(200,90,20,0.06) 45%, transparent 70%)',
+            filter: 'blur(48px)',
+            pointerEvents: 'none',
+            animation: 'orb-drift-b 14s ease-in-out infinite',
           }}
         />
 
