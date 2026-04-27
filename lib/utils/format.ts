@@ -11,6 +11,12 @@ export function formatAmount(usd: number): string {
   return `$${usd}`;
 }
 
+export function formatAmountCompact(usd: number): string {
+  if (usd >= 1_000_000) return `$${(usd / 1_000_000).toFixed(1)}M`;
+  if (usd >= 1_000) return `$${Math.round(usd / 1000)}K`;
+  return `$${usd}`;
+}
+
 export function daysSince(iso: string): number {
   return Math.floor((Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60 * 24));
 }
