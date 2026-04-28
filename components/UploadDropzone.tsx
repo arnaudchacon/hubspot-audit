@@ -32,6 +32,24 @@ const COLUMN_ALIASES: Record<string, string> = {
   'date created':   'created_at',
 };
 
+// Returns YYYY-MM-DD if the string is a recognizable date, null otherwise.
+// Handles: YYYY-MM-DD, ISO datetime (2024-03-15T...), MM/DD/YYYY, DD/MM/YYYY (ambiguous → MM/DD).
+function normalizeDate(raw: string): string | null {
+  const s = raw.trim();
+  // Already YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  // ISO datetime — take the date part
+  const isoMatch = s.match(/^(\d{4}-\d{2}-\d{2})T/);
+  if (isoMatch) return isoMatch[1];
+  // MM/DD/YYYY or DD/MM/YYYY (treat as MM/DD/YYYY — matches HubSpot US locale export)
+  const slashMatch = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (slashMatch) {
+    const [, mm, dd, yyyy] = slashMatch;
+    return `${yyyy}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
+  }
+  return null;
+}
+
 function validateHeaders(headers: string[]): string[] {
   const errors: string[] = [];
   const lowerHeaders = headers.map(h => h.toLowerCase().trim());
@@ -67,8 +85,8 @@ function validateRows(rows: Record<string, string>[]): string[] {
     if (!row.email || !row.email.includes('@')) {
       errors.push(`Row ${n}: invalid email "${row.email || ''}"`);
     }
-    if (!row.created_at || !/^\d{4}-\d{2}-\d{2}$/.test(row.created_at)) {
-      errors.push(`Row ${n}: invalid date "${row.created_at || ''}" — expected YYYY-MM-DD`);
+    if (!row.created_at || !normalizeDate(row.created_at)) {
+      errors.push(`Row ${n}: unrecognized date "${row.created_at || ''}" — expected YYYY-MM-DD, ISO datetime, or MM/DD/YYYY`);
     }
     if (errors.length >= 5) {
       errors.push('Fix the issues above and re-upload.');
@@ -87,7 +105,7 @@ function parseContacts(rows: Record<string, string>[]): Contact[] {
     phone:          row.phone || '',
     company_domain: row.company_domain || '',
     owner_id:       row.owner_id || null,
-    created_at:     row.created_at,
+    created_at:     normalizeDate(row.created_at) ?? row.created_at,
   }));
 }
 
@@ -184,7 +202,7 @@ export function UploadDropzone({ onClose }: UploadDropzoneProps) {
 
         {/* Header */}
         <p className="text-caption text-text-tertiary uppercase tracking-[0.05em] mb-3">
-          Phase 6 · Upload
+          Contacts CSV
         </p>
         <h2 className="text-h2 text-text-primary mb-6">Upload your contacts CSV</h2>
 
