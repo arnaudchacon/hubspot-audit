@@ -255,7 +255,7 @@ export function UploadDropzone({ onClose }: UploadDropzoneProps) {
         const rawHeaders = meta.fields ?? [];
         const aliasMap = tab === 'contacts' ? CONTACT_ALIASES : tab === 'deals' ? DEAL_ALIASES : WORKFLOW_ALIASES;
         const normalized = normalizeHeaders(rawHeaders, aliasMap);
-        const normalizedData = data.map((row, i) => {
+        const normalizedData = data.map((row) => {
           const out: Record<string, string> = {};
           rawHeaders.forEach((h, j) => { out[normalized[j]] = row[h] ?? ''; });
           return out;
