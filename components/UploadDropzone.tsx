@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, DragEvent, ChangeEvent } from 'react';
+import { useState, useRef, useEffect, DragEvent, ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Papa from 'papaparse';
 import { X, Upload, FileText } from 'lucide-react';
@@ -118,6 +118,14 @@ export function UploadDropzone({ onClose }: UploadDropzoneProps) {
   const [contacts, setContacts] = useState<Contact[] | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   function processFile(file: File) {
     if (!file.name.endsWith('.csv')) {

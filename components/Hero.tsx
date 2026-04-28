@@ -36,7 +36,22 @@ export function Hero() {
           </div>
 
           <p className="text-caption text-text-tertiary mt-6">
-            Built by Arnaud Chacon
+            Built by{' '}
+            <a
+              href="https://linkedin.com/in/arnaudchacon"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text-secondary hover:text-text-primary transition-colors duration-150"
+            >
+              Arnaud Chacon
+            </a>
+            {' · '}
+            <a
+              href="mailto:arnaudchacon@gmail.com"
+              className="text-text-secondary hover:text-text-primary transition-colors duration-150"
+            >
+              arnaudchacon@gmail.com
+            </a>
           </p>
 
         </div>

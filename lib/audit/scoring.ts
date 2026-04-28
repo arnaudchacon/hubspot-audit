@@ -17,7 +17,7 @@ export function calculateScore(issues: AuditIssue[]): {
   } else if (score >= 70) {
     interpretation = 'Generally healthy with some hygiene issues to address.';
   } else if (score >= 55) {
-    interpretation = 'Below median for B2B SaaS instances. Several issues are likely impacting reporting accuracy.';
+    interpretation = 'Below what we\'d expect for a healthy instance. Several issues are likely impacting reporting accuracy.';
   } else if (score >= 40) {
     interpretation = 'Significant data quality problems. Reporting and forecasting are likely unreliable.';
   } else {
