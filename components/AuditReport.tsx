@@ -13,6 +13,8 @@ interface AuditReportProps {
   source: 'demo' | 'upload';
 }
 
+const SEVERITY_DEDUCTIONS = { HIGH: 14, MEDIUM: 7, LOW: 3 } as const;
+
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-GB', {
     day: 'numeric',
@@ -44,11 +46,20 @@ export function AuditReport({ report, source }: AuditReportProps) {
             <span className="text-caption text-text-tertiary mt-1">/ 100</span>
           </div>
           <div className="w-px h-20 bg-border shrink-0" />
-          <div>
+          <div className="flex-1 min-w-0">
             <p className="text-h2 text-text-primary mb-2">{score_interpretation}</p>
-            <p className="text-body text-text-tertiary font-mono">
+            <p className="text-body text-text-tertiary font-mono mb-3">
               {dataset_summary.contacts} contacts · {dataset_summary.deals} deals · {dataset_summary.workflows} workflows
             </p>
+            {issues.length > 0 && (
+              <div className="flex flex-wrap gap-x-4 gap-y-1">
+                {issues.map(issue => (
+                  <span key={issue.check_id} className="text-body-sm text-text-tertiary font-mono whitespace-nowrap">
+                    −{SEVERITY_DEDUCTIONS[issue.severity]} {issue.title.toLowerCase()}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

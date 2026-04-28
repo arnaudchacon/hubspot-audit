@@ -1,0 +1,4 @@
+id,name,is_active,enrollment_count_30d,last_enrollment_date
+wf-001,New Lead Nurture Sequence,true,42,2025-03-15
+wf-002,Q4 2023 Campaign Emails,true,0,2023-12-01
+wf-003,Onboarding — Enterprise,true,8,2025-03-10
