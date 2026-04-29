@@ -16,11 +16,11 @@ const DEAL_CONFIG: Record<DealHint, { label: string; variant: 'info' | 'accent' 
 };
 
 const COLUMNS = [
-  { key: 'name',  label: 'Deal Name', mono: false },
-  { key: 'stage', label: 'Stage',     mono: false },
-  { key: 'amount',label: 'Amount',    mono: true  },
-  { key: 'days',  label: 'Days Dead', mono: true  },
-  { key: 'type',  label: 'Type',      mono: false },
+  { key: 'name',   label: 'Deal Name', mono: false, width: '34%' },
+  { key: 'stage',  label: 'Stage',     mono: false, width: '16%' },
+  { key: 'amount', label: 'Amount',    mono: true,  width: '14%' },
+  { key: 'days',   label: 'Days Dead', mono: true,  width: '14%' },
+  { key: 'type',   label: 'Type',      mono: false, width: '22%' },
 ];
 
 function titleCase(s: string): string {

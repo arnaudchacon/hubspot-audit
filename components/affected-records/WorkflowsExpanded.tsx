@@ -16,10 +16,10 @@ const PATTERN_CONFIG: Record<PatternHint, { label: string; variant: 'warning' | 
 };
 
 const COLUMNS = [
-  { key: 'name',     label: 'Name',            mono: false },
-  { key: 'last',     label: 'Last Enrollment', mono: false },
-  { key: 'days',     label: 'Days Dead',       mono: true  },
-  { key: 'pattern',  label: 'Pattern',         mono: false },
+  { key: 'name',     label: 'Name',            mono: false, width: '36%' },
+  { key: 'last',     label: 'Last Enrollment', mono: false, width: '20%' },
+  { key: 'days',     label: 'Days Dead',       mono: true,  width: '16%' },
+  { key: 'pattern',  label: 'Pattern',         mono: false, width: '28%' },
 ];
 
 export function WorkflowsExpanded({ issue }: Props) {

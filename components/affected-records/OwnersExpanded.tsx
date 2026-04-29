@@ -6,10 +6,10 @@ import { formatDate } from '@/lib/utils/format';
 interface Props { issue: AuditIssue }
 
 const COLUMNS = [
-  { key: 'name',       label: 'Name',    mono: false },
-  { key: 'email',      label: 'Email',   mono: false },
-  { key: 'created',    label: 'Created', mono: false },
-  { key: 'age',        label: 'Age',     mono: true  },
+  { key: 'name',       label: 'Name',    mono: false, width: '22%' },
+  { key: 'email',      label: 'Email',   mono: false, width: '42%' },
+  { key: 'created',    label: 'Created', mono: false, width: '20%' },
+  { key: 'age',        label: 'Age',     mono: true,  width: '16%' },
 ];
 
 export function OwnersExpanded({ issue }: Props) {

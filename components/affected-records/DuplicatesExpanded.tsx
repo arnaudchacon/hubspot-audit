@@ -16,10 +16,10 @@ const SIGNAL_BADGES: Array<{
 ];
 
 const COLUMNS = [
-  { key: 'id',     label: 'ID',     mono: true  },
-  { key: 'name',   label: 'Name',   mono: false },
-  { key: 'email',  label: 'Email',  mono: false },
-  { key: 'domain', label: 'Domain', mono: false },
+  { key: 'id',     label: 'ID',     mono: true,  width: '12%' },
+  { key: 'name',   label: 'Name',   mono: false, width: '22%' },
+  { key: 'email',  label: 'Email',  mono: false, width: '40%' },
+  { key: 'domain', label: 'Domain', mono: false, width: '26%' },
 ];
 
 export function DuplicatesExpanded({ issue }: Props) {
