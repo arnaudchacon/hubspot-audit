@@ -5,7 +5,7 @@ export function Footer() {
         <p className="text-caption text-text-tertiary">
           Built by{' '}
           <a
-            href="https://linkedin.com/in/arnaudchacon"
+            href="https://www.linkedin.com/in/arnaud-chacon/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-text-secondary hover:text-text-primary transition-colors duration-150"
