@@ -46,21 +46,23 @@ const config: Config = {
 
       // ─── Type scale (from DESIGN_SYSTEM.md) ──────────────────────────────
       fontSize: {
-        display:    ["56px", { lineHeight: "60px",  letterSpacing: "-0.02em",  fontWeight: "600" }],
-        h1:         ["32px", { lineHeight: "36px",  letterSpacing: "-0.01em",  fontWeight: "600" }],
-        h2:         ["24px", { lineHeight: "28px",  letterSpacing: "-0.005em", fontWeight: "600" }],
-        h3:         ["18px", { lineHeight: "24px",  letterSpacing: "0",        fontWeight: "600" }],
-        "body-lg":  ["16px", { lineHeight: "24px",  letterSpacing: "0",        fontWeight: "400" }],
-        body:       ["14px", { lineHeight: "20px",  letterSpacing: "0",        fontWeight: "400" }],
-        "body-sm":  ["13px", { lineHeight: "18px",  letterSpacing: "0",        fontWeight: "400" }],
-        caption:    ["12px", { lineHeight: "16px",  letterSpacing: "0.01em",   fontWeight: "500" }],
-        mono:       ["14px", { lineHeight: "20px",  letterSpacing: "0",        fontWeight: "500" }],
+        "hero-desktop": ["96px", { lineHeight: "1.0",   letterSpacing: "-0.02em",  fontWeight: "400" }],
+        "hero-mobile":  ["56px", { lineHeight: "1.05",  letterSpacing: "-0.015em", fontWeight: "400" }],
+        display:        ["56px", { lineHeight: "60px",  letterSpacing: "-0.02em",  fontWeight: "600" }],
+        h1:             ["32px", { lineHeight: "36px",  letterSpacing: "-0.01em",  fontWeight: "600" }],
+        h2:             ["24px", { lineHeight: "28px",  letterSpacing: "-0.005em", fontWeight: "600" }],
+        h3:             ["18px", { lineHeight: "24px",  letterSpacing: "0",        fontWeight: "600" }],
+        "body-lg":      ["16px", { lineHeight: "24px",  letterSpacing: "0",        fontWeight: "400" }],
+        body:           ["14px", { lineHeight: "20px",  letterSpacing: "0",        fontWeight: "400" }],
+        "body-sm":      ["13px", { lineHeight: "18px",  letterSpacing: "0",        fontWeight: "400" }],
+        caption:        ["12px", { lineHeight: "16px",  letterSpacing: "0.01em",   fontWeight: "500" }],
+        mono:           ["14px", { lineHeight: "20px",  letterSpacing: "0",        fontWeight: "500" }],
       },
 
       // ─── Max widths ───────────────────────────────────────────────────────
       maxWidth: {
         content: "1024px",
-        hero:    "768px",
+        hero:    "880px",
       },
 
       // ─── Animations ───────────────────────────────────────────────────────

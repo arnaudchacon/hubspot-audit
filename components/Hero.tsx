@@ -18,11 +18,11 @@ export function Hero() {
             FIG 00 — A CRM audit tool
           </p>
 
-          <h1 className="font-serif text-text-primary" style={{ fontSize: '64px', lineHeight: '1.05', letterSpacing: '-0.01em', fontWeight: 400 }}>
+          <h1 className="font-serif text-text-primary text-hero-mobile md:text-hero-desktop">
             Most HubSpot instances<br />are quietly broken.
           </h1>
 
-          <p className="text-body-lg text-text-secondary" style={{ maxWidth: '60%' }}>
+          <p className="text-body-lg text-text-secondary max-w-[560px]">
             Upload your contacts export and get a scored audit report with specific, actionable fix recommendations.
           </p>
 
