@@ -31,6 +31,16 @@ export function AuditReport({ report, source }: AuditReportProps) {
     <main className="min-h-screen bg-bg">
       <div className="max-w-content mx-auto px-6 py-16">
 
+        {/* Top utility row — home link sits top-right */}
+        <div className="mb-10 flex items-center justify-end">
+          <Link
+            href="/"
+            className="text-caption text-text-tertiary hover:text-text-primary transition-colors duration-150 uppercase tracking-[0.05em] font-mono inline-flex items-center gap-1.5"
+          >
+            ← Home
+          </Link>
+        </div>
+
         {/* Header */}
         <div className="mb-12">
           <p className="text-caption text-text-tertiary uppercase tracking-[0.05em] mb-3 font-mono">
