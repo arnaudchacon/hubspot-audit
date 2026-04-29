@@ -14,12 +14,12 @@ export function Hero() {
 
         <div className="w-full max-w-hero flex flex-col items-start gap-6">
 
-          <p className="text-caption text-text-tertiary uppercase tracking-[0.05em]">
-            FIG 0.1 — A CRM AUDIT TOOL
+          <p className="text-caption text-text-tertiary uppercase tracking-[0.05em] font-mono">
+            FIG 00 — A CRM audit tool
           </p>
 
-          <h1 className="text-display text-text-primary">
-            Most HubSpot instances are quietly broken.
+          <h1 className="font-serif text-text-primary" style={{ fontSize: '64px', lineHeight: '1.05', letterSpacing: '-0.01em', fontWeight: 400 }}>
+            Most HubSpot instances<br />are quietly broken.
           </h1>
 
           <p className="text-body-lg text-text-secondary" style={{ maxWidth: '60%' }}>

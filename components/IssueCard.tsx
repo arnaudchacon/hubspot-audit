@@ -5,6 +5,7 @@ import { AffectedRecords } from '@/components/affected-records/AffectedRecords';
 interface IssueCardProps {
   issue: AuditIssue;
   index: number;
+  total: number;
   onViewRecords: () => void;
 }
 
@@ -29,19 +30,35 @@ function parseRecommendation(text: string): Array<{ label: SectionKey; content: 
   });
 }
 
-export function IssueCard({ issue, index, onViewRecords }: IssueCardProps) {
+export function IssueCard({ issue, index, total, onViewRecords }: IssueCardProps) {
   const sections = issue.ai_recommendation ? parseRecommendation(issue.ai_recommendation) : null;
+
+  // Severity-aware visual gradient — felt in peripheral vision before badges register.
+  const severityClasses =
+    issue.severity === 'HIGH'
+      ? 'bg-bg border border-border border-l-2 border-l-severity-high'
+      : issue.severity === 'LOW'
+      ? 'bg-surface border border-border opacity-90'
+      : 'bg-bg border border-border';
+
+  const titleColorClass = issue.severity === 'LOW' ? 'text-text-secondary' : 'text-text-primary';
+
+  const issueNumber = String(index + 1).padStart(2, '0');
+  const totalNumber = String(total).padStart(2, '0');
 
   return (
     <div
-      className="bg-bg border border-border rounded-lg p-6 animate-fade-in hover:border-border-strong hover:shadow-hover transition-[border-color,box-shadow] duration-150"
+      className={`${severityClasses} rounded-lg p-6 animate-fade-in hover:border-border-strong hover:shadow-hover transition-[border-color,box-shadow] duration-150`}
       style={{ animationDelay: `${index * 50}ms` }}
     >
-      <div className="mb-3">
+      <div className="mb-3 flex items-center justify-between">
         <Badge severity={issue.severity} />
+        <span className="text-caption text-text-tertiary font-mono uppercase tracking-[0.05em]">
+          Issue {issueNumber} / {totalNumber}
+        </span>
       </div>
 
-      <h3 className="text-h3 text-text-primary mb-2">{issue.title}</h3>
+      <h3 className={`text-h3 ${titleColorClass} mb-2`}>{issue.title}</h3>
       <p className="text-body text-text-secondary mb-5">{issue.detail}</p>
 
       {issue.ai_recommendation && (

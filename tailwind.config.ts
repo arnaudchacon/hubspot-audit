@@ -39,8 +39,9 @@ const config: Config = {
 
       // ─── Fonts ────────────────────────────────────────────────────────────
       fontFamily: {
-        sans: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
-        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
+        sans:  ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+        mono:  ["var(--font-mono)", "JetBrains Mono", "monospace"],
+        serif: ["var(--font-serif)", "Georgia", "Cambria", "Times New Roman", "serif"],
       },
 
       // ─── Type scale (from DESIGN_SYSTEM.md) ──────────────────────────────

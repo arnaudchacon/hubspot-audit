@@ -4,23 +4,23 @@
 
 /* ─── Design tokens ──────────────────────────────────────────────────────── */
 :root {
-  /* Surfaces */
-  --bg:               #FFFFFF;
-  --surface:          #FAFAFA;
-  --surface-elevated: #FFFFFF;
-  --border:           #E8E8E8;
-  --border-strong:    #D4D4D4;
+  /* Surfaces — warm paper tones (not pure white) */
+  --bg:               #FAF8F5;
+  --surface:          #F2EEE8;
+  --surface-elevated: #FAF8F5;
+  --border:           #E5DFD4;
+  --border-strong:    #D1CABE;
 
   /* Text */
-  --text-primary:   #0F0F0F;
-  --text-secondary: #555555;
-  --text-tertiary:  #888888;
-  --text-disabled:  #B5B5B5;
+  --text-primary:   #1A1614;
+  --text-secondary: #555048;
+  --text-tertiary:  #8A847A;
+  --text-disabled:  #B8B2A6;
 
-  /* Accent — use sparingly (max 3× per screen) */
-  --accent:       #5E6AD2;
-  --accent-hover: #4F5BC4;
-  --accent-bg:    #F4F5FE;
+  /* Accent — deep ink, distinctive against warm paper (use sparingly, max 3× per screen) */
+  --accent:       oklch(0.42 0.08 250);
+  --accent-hover: oklch(0.36 0.08 250);
+  --accent-bg:    oklch(0.95 0.02 250);
 
   /* Severity */
   --severity-high:       #C73E3E;
