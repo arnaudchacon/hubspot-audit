@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { X } from 'lucide-react';
+import { Download, X } from 'lucide-react';
 import type { AuditIssue } from '@/lib/audit/types';
+import { downloadCsv } from '@/lib/utils/csv';
 import { RENDERERS } from './registry';
 
 interface DrawerPanelProps {
@@ -89,6 +90,7 @@ export function DrawerPanel({ issue, onClose }: DrawerPanelProps) {
       {/* Backdrop */}
       <div
         onClick={onClose}
+        className="no-print"
         style={{
           position: 'fixed',
           inset: 0,
@@ -102,6 +104,7 @@ export function DrawerPanel({ issue, onClose }: DrawerPanelProps) {
 
       {/* Drawer panel */}
       <div
+        className="no-print"
         style={{
           position: 'fixed',
           top: 0,
@@ -179,6 +182,20 @@ export function DrawerPanel({ issue, onClose }: DrawerPanelProps) {
               <p className="text-[13px] mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                 {issue.detail}
               </p>
+            )}
+            {issue && renderer?.csv && (
+              <button
+                onClick={() => {
+                  const exp = renderer.csv!(issue);
+                  downloadCsv(exp.filename, exp.headers, exp.rows);
+                }}
+                className="mt-2.5 inline-flex items-center gap-1.5 text-[13px] font-medium transition-colors duration-150"
+                style={{ color: 'var(--accent)' }}
+                onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent-hover)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'var(--accent)')}
+              >
+                <Download size={13} /> Download CSV
+              </button>
             )}
           </div>
           <button

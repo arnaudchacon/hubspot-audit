@@ -1,104 +1,246 @@
 {
-  "generated_at": "2026-04-27T08:33:04.599Z",
+  "generated_at": "2026-07-05T05:49:34.423Z",
   "dataset_summary": {
-    "contacts": 50,
+    "contacts": 56,
     "deals": 12,
     "workflows": 8
   },
-  "overall_score": 55,
-  "score_interpretation": "Below median for B2B SaaS instances. Several issues are likely impacting reporting accuracy.",
+  "overall_score": 52,
+  "score_interpretation": "Below what we'd expect for a healthy instance. Several issues are likely impacting reporting accuracy.",
   "issues": [
     {
       "check_id": "duplicates",
       "title": "Likely duplicate contacts detected",
       "severity": "HIGH",
-      "detail": "Found 6 duplicate clusters covering 13 of 50 contacts.",
+      "detail": "Found 6 duplicate clusters covering 13 of 56 contacts.",
       "raw_data": {
         "cluster_count": 6,
         "affected_contacts": 13,
-        "total_contacts": 50,
-        "sample_clusters": [
+        "total_contacts": 56,
+        "review_pairs": [
           {
-            "contacts": [
-              {
-                "id": "c001",
-                "first_name": "Alex",
-                "last_name": "Martinez",
-                "email": "alex.martinez@stratosfinance.com",
-                "phone": "+1 415 555 0101",
-                "company_domain": "stratosfinance.com",
-                "owner_id": "u001",
-                "created_at": "2024-03-15"
-              },
-              {
-                "id": "c002",
-                "first_name": "Alexa",
-                "last_name": "Martinez",
-                "email": "alex.martinez@stratosfinance.com",
-                "phone": "415-555-0101",
-                "company_domain": "stratosfinance.com",
-                "owner_id": "u001",
-                "created_at": "2024-04-02"
-              },
-              {
-                "id": "c003",
-                "first_name": "Alex",
-                "last_name": "Martínez",
-                "email": "a.martinez@stratosfinance.com",
-                "phone": "+1 (415) 555 0101",
-                "company_domain": "stratosfinance.com",
-                "owner_id": null,
-                "created_at": "2024-04-08"
-              }
-            ]
+            "pair_id": "c012|c055",
+            "score": 0.7818181818181817,
+            "subscores": {
+              "name": 0.9090909090909091,
+              "email": 0.7272727272727273,
+              "domain": 1,
+              "phone": 0
+            },
+            "a": {
+              "id": "c012",
+              "name": "Yuki Tanaka",
+              "email": "y.tanaka@kobesoft.jp",
+              "phone": "+81 90 1234 5678",
+              "domain": "kobesoft.jp",
+              "owner_id": "u002",
+              "created_at": "2023-12-14"
+            },
+            "b": {
+              "id": "c055",
+              "name": "Yuko Tanaka",
+              "email": "yuko.tanaka@kobesoft.jp",
+              "phone": "+81 90 8765 4321",
+              "domain": "kobesoft.jp",
+              "owner_id": "u002",
+              "created_at": "2024-07-19"
+            }
           },
           {
-            "contacts": [
-              {
-                "id": "c004",
-                "first_name": "Sarah",
-                "last_name": "Chen",
-                "email": "sarah@meridiancap.io",
-                "phone": "+852 9123 4567",
-                "company_domain": "meridiancap.io",
-                "owner_id": "u002",
-                "created_at": "2024-01-22"
-              },
-              {
-                "id": "c005",
-                "first_name": "Sara",
-                "last_name": "Chen",
-                "email": "sarah.chen@meridiancap.io",
-                "phone": "+852 9123 4567",
-                "company_domain": "meridiancap.io",
-                "owner_id": "u002",
-                "created_at": "2024-02-11"
-              }
-            ]
+            "pair_id": "c031|c032",
+            "score": 0.7633333333333333,
+            "subscores": {
+              "name": 0.9333333333333333,
+              "email": 0.30000000000000004,
+              "domain": 1,
+              "phone": 1
+            },
+            "a": {
+              "id": "c031",
+              "name": "Karim Ben Salem",
+              "email": "karim@tunisalpha.tn",
+              "phone": "+216 71 234 567",
+              "domain": "tunisalpha.tn",
+              "owner_id": "u001",
+              "created_at": "2024-06-21"
+            },
+            "b": {
+              "id": "c032",
+              "name": "Karim BenSalem",
+              "email": "k.bensalem@tunisalpha.tn",
+              "phone": "+216 71 234 567",
+              "domain": "tunisalpha.tn",
+              "owner_id": "u001",
+              "created_at": "2024-07-01"
+            }
           },
           {
-            "contacts": [
-              {
-                "id": "c006",
-                "first_name": "James",
-                "last_name": "OBrien",
-                "email": "j.obrien@nordpay.eu",
-                "phone": "0033612345678",
-                "company_domain": "nordpay.eu",
-                "owner_id": "u003",
-                "created_at": "2023-11-05"
-              },
-              {
-                "id": "c007",
-                "first_name": "James",
-                "last_name": "O'Brien",
-                "email": "james.obrien@nordpay.eu",
-                "phone": "+33 6 12 34 56 78",
-                "company_domain": "nordpay.eu",
-                "owner_id": null,
-                "created_at": "2024-05-19"
-              }
-            ]
+            "pair_id": "c029|c056",
+            "score": 0.7294117647058824,
+            "subscores": {
+              "name": 0.8235294117647058,
+              "email": 0.6666666666666667,
+              "domain": 1,
+              "phone": 0
+            },
+            "a": {
+              "id": "c029",
+              "name": "Victor Almeida",
+              "email": "victor@lisbonbio.pt",
+              "phone": "00351 21 987 6543",
+              "domain": "lisbonbio.pt",
+              "owner_id": null,
+              "created_at": "2024-05-02"
+            },
+            "b": {
+              "id": "c056",
+              "name": "Victor Almeida Jr",
+              "email": "victor.jr@lisbonbio.pt",
+              "phone": "+351 21 555 7890",
+              "domain": "lisbonbio.pt",
+              "owner_id": "u005",
+              "created_at": "2024-07-22"
+            }
+          },
+          {
+            "pair_id": "c028|c053",
+            "score": 0.7,
+            "subscores": {
+              "name": 1,
+              "email": 1,
+              "domain": 0,
+              "phone": 0
+            },
+            "a": {
+              "id": "c028",
+              "name": "Elena Rossi",
+              "email": "elena.rossi@milanfintech.it",
+              "phone": "+39 02 1234 5678",
+              "domain": "milanfintech.it",
+              "owner_id": "u002",
+              "created_at": "2024-01-19"
+            },
+            "b": {
+              "id": "c053",
+              "name": "Elena Rossi",
+              "email": "elena.rossi@romaclassico.it",
+              "phone": "+39 06 8765 4321",
+              "domain": "romaclassico.it",
+              "owner_id": "u002",
+              "created_at": "2024-07-11"
+            }
+          },
+          {
+            "pair_id": "c005|c051",
+            "score": 0.6772727272727272,
+            "subscores": {
+              "name": 0.8181818181818181,
+              "email": 0.5,
+              "domain": 1,
+              "phone": 0
+            },
+            "a": {
+              "id": "c005",
+              "name": "Sara Chen",
+              "email": "sarah.chen@meridiancap.io",
+              "phone": "+852 9123 4567",
+              "domain": "meridiancap.io",
+              "owner_id": "u002",
+              "created_at": "2024-02-11"
+            },
+            "b": {
+              "id": "c051",
+              "name": "Sarah Cheng",
+              "email": "s.cheng@meridiancap.io",
+              "phone": "+852 9888 1234",
+              "domain": "meridiancap.io",
+              "owner_id": "u002",
+              "created_at": "2024-06-28"
+            }
+          },
+          {
+            "pair_id": "c010|c052",
+            "score": 0.6533333333333333,
+            "subscores": {
+              "name": 0.9333333333333333,
+              "email": 0.9333333333333333,
+              "domain": 0,
+              "phone": 0
+            },
+            "a": {
+              "id": "c010",
+              "name": "Marcus Hoffmann",
+              "email": "marcus.hoffmann@bayernlogistik.de",
+              "phone": "+49 30 1234567",
+              "domain": "bayernlogistik.de",
+              "owner_id": "u004",
+              "created_at": "2024-03-30"
+            },
+            "b": {
+              "id": "c052",
+              "name": "Marcus Hofmann",
+              "email": "marcus.hofmann@hofmann-beratung.de",
+              "phone": "+49 89 555 4321",
+              "domain": "hofmann-beratung.de",
+              "owner_id": "u004",
+              "created_at": "2024-05-16"
+            }
+          },
+          {
+            "pair_id": "c034|c054",
+            "score": 0.625,
+            "subscores": {
+              "name": 1,
+              "email": 0.75,
+              "domain": 0,
+              "phone": 0
+            },
+            "a": {
+              "id": "c034",
+              "name": "Jin Park",
+              "email": "jin.park@seoulai.kr",
+              "phone": "+82 2 1234 5678",
+              "domain": "seoulai.kr",
+              "owner_id": null,
+              "created_at": "2024-04-29"
+            },
+            "b": {
+              "id": "c054",
+              "name": "Jin Park",
+              "email": "j.park@parkventures.kr",
+              "phone": "+82 2 9876 5432",
+              "domain": "parkventures.kr",
+              "owner_id": "u003",
+              "created_at": "2024-06-03"
+            }
+          },
+          {
+            "pair_id": "c004|c051",
+            "score": 0.6064935064935065,
+            "subscores": {
+              "name": 0.9090909090909091,
+              "email": 0.1428571428571429,
+              "domain": 1,
+              "phone": 0
+            },
+            "a": {
+              "id": "c004",
+              "name": "Sarah Chen",
+              "email": "sarah@meridiancap.io",
+              "phone": "+852 9123 4567",
+              "domain": "meridiancap.io",
+              "owner_id": "u002",
+              "created_at": "2024-01-22"
+            },
+            "b": {
+              "id": "c051",
+              "name": "Sarah Cheng",
+              "email": "s.cheng@meridiancap.io",
+              "phone": "+852 9888 1234",
+              "domain": "meridiancap.io",
+              "owner_id": "u002",
+              "created_at": "2024-06-28"
+            }
           }
         ],
         "full_clusters": [
@@ -254,77 +396,127 @@
               "domain_matches": true,
               "phone_matches": true
             }
+          },
+          {
+            "cluster_id": "cluster_6",
+            "contact_ids": [
+              "c025",
+              "c026"
+            ],
+            "contacts": [
+              {
+                "id": "c025",
+                "name": "Charlotte Dubois",
+                "email": "c.dubois@lyonpharma.fr",
+                "domain": "lyonpharma.fr",
+                "phone_normalized": "78123456"
+              },
+              {
+                "id": "c026",
+                "name": "Charlotte Dubois",
+                "email": "charlotte.dubois@lyonpharma.fr",
+                "domain": "lyonpharma.fr",
+                "phone_normalized": "78123456"
+              }
+            ],
+            "similarity_signals": {
+              "name_varies": false,
+              "email_local_varies": true,
+              "domain_matches": true,
+              "phone_matches": true
+            }
           }
         ]
       },
-      "ai_recommendation": "ROOT CAUSE: These duplicates, like Alex Martinez and Alexa Martinez, likely stem from multiple data entry points (e.g., forms, imports) that don't check for existing contacts with similar names or email domains, allowing slight variations to create new records.\n\nFIRST STEP: Go to Contacts > Contacts, filter by 'Create date' for the last 30 days, and manually merge any obvious duplicates you find. For Free/Starter users, this is your only option; Pro/Enterprise users should also check the 'Manage Duplicates' tool under Contacts.\n\nWATCH FOR: Don't just merge without looking at your forms or import processes; the same intake path that created \"Sarah Chen\" and \"Sara Chen\" will just make new duplicates next week."
+      "ai_recommendation": "ROOT CAUSE: Most duplicate contact problems trace back to a single intake path that never had a dedup gate — usually a form that fires on every submission without checking if that email already exists. The duplicates don't appear all at once; they compound quietly for months.\n\nFIRST STEP: Pull your contacts list, filter by email domain, and sort by create date. Clusters of the same domain created days apart are your duplicates. On Pro/Enterprise, Settings → Data Management → Duplicates surfaces the highest-confidence matches. On Free/Starter, you're doing this manually in a spreadsheet — export, sort on email, merge row by row.\n\nWATCH FOR: The trap most people fall into is merging without fixing the intake. The duplicates come back within weeks. Find out which form or import triggered the pattern first."
     },
     {
       "check_id": "owners",
       "title": "Contacts missing owner assignment",
       "severity": "HIGH",
-      "detail": "13 of 50 contacts (26%) have no owner assigned.",
+      "detail": "13 of 56 contacts (23%) have no owner assigned.",
       "raw_data": {
         "missing_count": 13,
-        "total_count": 50,
-        "percentage": 26,
-        "sample_orphans": [
-          {
-            "name": "Alex Martínez",
-            "email": "a.martinez@stratosfinance.com",
-            "created_at": "2024-04-08"
-          },
-          {
-            "name": "James O'Brien",
-            "email": "james.obrien@nordpay.eu",
-            "created_at": "2024-05-19"
-          },
-          {
-            "name": "Marc Hoffmann",
-            "email": "m.hoffmann@bayernlogistik.de",
-            "created_at": "2024-07-04"
-          },
-          {
-            "name": "Sophie Laurent",
-            "email": "sophie.laurent@vivariofintech.fr",
-            "created_at": "2024-04-22"
-          },
-          {
-            "name": "Hassan Khalil",
-            "email": "hassan@gulfstreamcap.ae",
-            "created_at": "2024-06-30"
-          }
-        ],
-        "orphans_recent_5": [
+        "total_count": 56,
+        "percentage": 23.214285714285715,
+        "orphans": [
           {
             "name": "Tomás Silva",
             "email": "tomas@saopaulodefi.br",
             "created_at": "2024-07-15",
-            "days_old": 651
+            "days_old": 720
           },
           {
             "name": "Mei Lin",
             "email": "mei.lin@taipeicapital.tw",
             "created_at": "2024-07-08",
-            "days_old": 658
+            "days_old": 727
           },
           {
             "name": "Marc Hoffmann",
             "email": "m.hoffmann@bayernlogistik.de",
             "created_at": "2024-07-04",
-            "days_old": 662
+            "days_old": 731
           },
           {
             "name": "Hassan Khalil",
             "email": "hassan@gulfstreamcap.ae",
             "created_at": "2024-06-30",
-            "days_old": 666
+            "days_old": 735
           },
           {
             "name": "Aaron Mitchell",
             "email": "aaron.m@aucklandbio.nz",
             "created_at": "2024-06-25",
-            "days_old": 671
+            "days_old": 740
+          },
+          {
+            "name": "Beatrice Verdi",
+            "email": "b.verdi@romaclassico.it",
+            "created_at": "2024-06-17",
+            "days_old": 748
+          },
+          {
+            "name": "Vince Holloway",
+            "email": "vince.holloway@manchestercap.uk",
+            "created_at": "2024-06-13",
+            "days_old": 752
+          },
+          {
+            "name": "Mehmet Yilmaz",
+            "email": "mehmet@bosphoruslogi.com.tr",
+            "created_at": "2024-06-08",
+            "days_old": 757
+          },
+          {
+            "name": "James O'Brien",
+            "email": "james.obrien@nordpay.eu",
+            "created_at": "2024-05-19",
+            "days_old": 777
+          },
+          {
+            "name": "Victor Almeida",
+            "email": "victor@lisbonbio.pt",
+            "created_at": "2024-05-02",
+            "days_old": 794
+          },
+          {
+            "name": "Jin Park",
+            "email": "jin.park@seoulai.kr",
+            "created_at": "2024-04-29",
+            "days_old": 797
+          },
+          {
+            "name": "Sophie Laurent",
+            "email": "sophie.laurent@vivariofintech.fr",
+            "created_at": "2024-04-22",
+            "days_old": 804
+          },
+          {
+            "name": "Alex Martínez",
+            "email": "a.martinez@stratosfinance.com",
+            "created_at": "2024-04-08",
+            "days_old": 818
           }
         ],
         "date_distribution": {
@@ -333,7 +525,7 @@
           "older": 13
         }
       },
-      "ai_recommendation": "ROOT CAUSE: These 13 orphaned contacts, like Tomás Silva, are all older than 90 days, which points to accumulated drift from previous intake channels or owner deactivations, not a currently broken form or API integration.\n\nFIRST STEP: Filter your contacts for \"Contact owner is unknown\" and bulk assign them to the correct owner using the \"Assign owner\" bulk action. For Free/Starter users, this is the only way to fix existing records.\n\nWATCH FOR: Don't try to guess the original owner based on old activity logs; just assign them to the current SDR or AE responsible for their company's region or industry."
+      "ai_recommendation": "ROOT CAUSE: These 13 contacts, like Tomás Silva and Mei Lin, have no owner because they were created over two years ago and never assigned one, indicating an old cleanup task was missed, not a current intake misconfiguration.\n\nFIRST STEP: Go to Contacts > Contacts, filter by \"Contact owner is unknown,\" and use the bulk edit action to assign them to the correct reps. If you're on a Starter+ plan, you can build a workflow to automate this for *future* unknown contacts.\n\nWATCH FOR: Don't just assign them all to one person; you'll overload them. Distribute them based on region, industry, or whatever your current routing logic is, even if it's manual for these old records."
     },
     {
       "check_id": "workflows",
@@ -343,42 +535,28 @@
       "raw_data": {
         "zombie_count": 3,
         "total_active": 8,
-        "zombie_workflows": [
-          {
-            "name": "Re-Engagement — Cold Leads (60 days)",
-            "last_enrollment": "2025-08-14"
-          },
-          {
-            "name": "Webinar Q4 2024 Follow-Up",
-            "last_enrollment": "2024-12-18"
-          },
-          {
-            "name": "Old Sales Onboarding Flow (legacy)",
-            "last_enrollment": "2024-06-30"
-          }
-        ],
         "zombie_full_list": [
           {
             "name": "Re-Engagement — Cold Leads (60 days)",
             "last_enrollment_date": "2025-08-14",
-            "days_since_enrollment": 256,
+            "days_since_enrollment": 325,
             "name_pattern_hint": "deprecated"
           },
           {
             "name": "Webinar Q4 2024 Follow-Up",
             "last_enrollment_date": "2024-12-18",
-            "days_since_enrollment": 495,
+            "days_since_enrollment": 564,
             "name_pattern_hint": "expired_campaign"
           },
           {
             "name": "Old Sales Onboarding Flow (legacy)",
             "last_enrollment_date": "2024-06-30",
-            "days_since_enrollment": 666,
+            "days_since_enrollment": 735,
             "name_pattern_hint": "deprecated"
           }
         ]
       },
-      "ai_recommendation": "ROOT CAUSE: Workflows like \"Webinar Q4 2024 Follow-Up\" were left active after their campaign or purpose ended, cluttering the instance and potentially hitting workflow limits.\n\nFIRST STEP: Go to Automation > Workflows, filter by \"Active,\" and pause \"Webinar Q4 2024 Follow-Up\" and \"Old Sales Onboarding Flow (legacy).\" You can always reactivate them if needed; pausing is reversible.\n\nWATCH FOR: Don't delete workflows immediately; you lose all enrollment history. Pause them first, then check again in 90 days to confirm they're truly dead before deleting."
+      "ai_recommendation": "ROOT CAUSE: Active workflows with no recent enrollments are usually campaigns or events that ended without anyone archiving them. They're not doing damage, but they count against your workflow limit and make it impossible to audit what's actually running.\n\nFIRST STEP: Go to Automation → Workflows, filter by Active, sort by enrollment count ascending. Anything at zero for 30+ days should be paused — not deleted. Deletion removes the enrollment history, which sometimes matters for attribution.\n\nWATCH FOR: Pausing a workflow doesn't unenroll contacts already in it. Check the \"Currently enrolled\" number before you pause — if it's non-zero on a workflow you think is dead, something is still triggering it."
     },
     {
       "check_id": "stale_deals",
@@ -388,59 +566,70 @@
       "raw_data": {
         "stale_count": 4,
         "arr_at_risk_usd": 309000,
-        "days_oldest": 148,
-        "sample_deals": [
-          {
-            "name": "Nord Pay — Enterprise",
-            "stage": "qualification",
-            "amount": 96000,
-            "days_inactive": 133
-          },
-          {
-            "name": "Bayern Logistik — Trial Extension",
-            "stage": "proposal",
-            "amount": 18000,
-            "days_inactive": 109
-          },
-          {
-            "name": "Helix Sec — Enterprise",
-            "stage": "proposal",
-            "amount": 85000,
-            "days_inactive": 148
-          }
-        ],
+        "days_oldest": 217,
         "stale_full_list": [
           {
             "name": "Shanghai Quant — Strategic",
             "stage": "qualification",
             "amount_usd": 110000,
-            "days_inactive": 126,
+            "days_inactive": 195,
             "deal_type_hint": "enterprise"
           },
           {
             "name": "Nord Pay — Enterprise",
             "stage": "qualification",
             "amount_usd": 96000,
-            "days_inactive": 133,
+            "days_inactive": 202,
             "deal_type_hint": "enterprise"
           },
           {
             "name": "Helix Sec — Enterprise",
             "stage": "proposal",
             "amount_usd": 85000,
-            "days_inactive": 148,
+            "days_inactive": 217,
             "deal_type_hint": "enterprise"
           },
           {
             "name": "Bayern Logistik — Trial Extension",
             "stage": "proposal",
             "amount_usd": 18000,
-            "days_inactive": 109,
+            "days_inactive": 178,
             "deal_type_hint": "pilot"
           }
         ]
       },
-      "ai_recommendation": "ROOT CAUSE: Sales reps aren't closing out deals they've stopped working, like \"Shanghai Quant — Strategic,\" which has been inactive for 126 days, inflating the active pipeline.\n\nFIRST STEP: Create a \"Stale Deal Cleanup\" workflow (Automation > Workflows) that moves deals inactive for over 90 days to a new custom \"On Hold\" stage. This keeps the deal record but removes it from active forecasts.\n\nWATCH FOR: Reps will push back on moving deals to \"Closed Lost\" because it impacts their metrics; an \"On Hold\" stage is a good compromise, but make sure they still add a reason to the deal record why it's there."
+      "ai_recommendation": "ROOT CAUSE: Deals go stale when reps stop updating them but don't close them as lost — usually because closing lost feels like admitting failure, or because the deal might still technically come back someday. The result is a pipeline that looks healthy on paper and is useless for forecasting.\n\nFIRST STEP: Filter your deal view by last activity date, sort ascending. For each stale deal: move it to Closed Lost with a reason code, or create a custom \"On Hold\" stage that excludes it from your forecast. Don't just update the activity date — that masks the problem.\n\nWATCH FOR: The reason codes matter more than the cleanup. If you see a pattern (all stale deals are in Negotiation, all are enterprise-size), that's a process signal, not a data signal."
+    },
+    {
+      "check_id": "deal_hygiene",
+      "title": "Unforecastable deals in active pipeline",
+      "severity": "MEDIUM",
+      "detail": "2 of 12 active deals can't be forecast: 1 with no owner, 1 with no amount.",
+      "raw_data": {
+        "flagged_count": 2,
+        "total_active": 12,
+        "missing_owner_count": 1,
+        "missing_amount_count": 1,
+        "flagged_deals": [
+          {
+            "name": "Meridian Capital — Pilot",
+            "stage": "proposal",
+            "amount_usd": 0,
+            "problems": [
+              "missing_amount"
+            ]
+          },
+          {
+            "name": "Vivario Fintech — Annual",
+            "stage": "discovery",
+            "amount_usd": 42000,
+            "problems": [
+              "missing_owner"
+            ]
+          }
+        ]
+      },
+      "ai_recommendation": "ROOT CAUSE: Deals with no owner or no amount are usually created by an integration or workflow that doesn't map those fields, or by reps skipping fields on quick-create. Either way, these deals sit in your pipeline total but appear in no one's forecast — money nobody is accountable for.\n\nFIRST STEP: Filter your deal board by \"Deal owner is unknown\" and \"Amount is unknown,\" assign an owner and a real number to each, and note who or what created them. On Pro, make amount and owner required via conditional stage properties (Settings > Objects > Deals > Pipelines) so a deal can't advance without them.\n\nWATCH FOR: If the flagged deals were all created by the same integration, fixing the records without fixing the field mapping means new broken deals next week. Trace the source before you clean."
     },
     {
       "check_id": "phone_format",
@@ -449,20 +638,15 @@
       "detail": "2 different phone number formats are in use across your contacts.",
       "raw_data": {
         "format_distribution": {
-          "plus_format": 43,
+          "plus_format": 49,
           "no_prefix": 1,
           "double_zero": 6
         },
         "significant_bucket_count": 2,
-        "examples": {
-          "plus_format": "+1 415 555 0101",
-          "double_zero": "0033612345678",
-          "no_prefix": "415-555-0101"
-        },
         "format_examples_with_counts": [
           {
             "format": "plus_format",
-            "count": 43,
+            "count": 49,
             "examples": [
               "+1 415 555 0101",
               "+1 (415) 555 0101"
@@ -480,7 +664,45 @@
           }
         ]
       },
-      "ai_recommendation": "ROOT CAUSE: HubSpot doesn't normalize phone formats on import, so the mix of `plus_format` and `double_zero` suggests uncoordinated intake channels, likely CSV imports or forms without strict validation.\n\nFIRST STEP: If you have Operations Hub Starter or higher, build a workflow (Automation > Workflows) that triggers on \"Phone Number is known\" and uses the \"Format data\" action to set the phone number property to E.164. Otherwise, export contacts with phone numbers, clean them to E.164 format, and re-import.\n\nWATCH FOR: Manually cleaning these 49 contacts via individual record edits is a waste of time; you'll just get new bad data next week. Focus on the source."
+      "ai_recommendation": "ROOT CAUSE: Mixed phone formats are a symptom of uncoordinated intake channels — each source preserves whatever format it received. The problem isn't cosmetic; calling integrations and SMS workflows will silently skip records that don't match E.164 (+CountryCode then digits, no separators).\n\nFIRST STEP: Export to CSV, run a find-and-replace pass to strip non-numeric characters, add the country code prefix, re-import with \"Update existing contacts\" selected. On Operations Hub Starter and above, you can create a Data Quality Workflow to enforce E.164 on new records and eliminate the problem at the source.\n\nWATCH FOR: Before you start, spot-check 10 records manually. If your data mixes US domestic and international numbers, the normalization logic is different for each — don't batch them together."
+    },
+    {
+      "check_id": "email_quality",
+      "title": "Low-quality email addresses",
+      "severity": "LOW",
+      "detail": "4 of 56 contacts (7%) use a personal, role-based, or invalid email address.",
+      "raw_data": {
+        "flagged_count": 4,
+        "total_count": 56,
+        "percentage": 7.142857142857142,
+        "invalid_count": 0,
+        "freemail_count": 3,
+        "role_count": 1,
+        "samples": [
+          {
+            "name": "Olivia Brennan",
+            "email": "olivia.brennan@gmail.com",
+            "reason": "freemail"
+          },
+          {
+            "name": "Wei Tan",
+            "email": "weitan.88@hotmail.com",
+            "reason": "freemail"
+          },
+          {
+            "name": "Layla Hassan",
+            "email": "layla.hassan@yahoo.com",
+            "reason": "freemail"
+          },
+          {
+            "name": "Joshua Kim",
+            "email": "info@vancouverpay.ca",
+            "reason": "role_based"
+          }
+        ]
+      },
+      "ai_recommendation": "ROOT CAUSE: Freemail and role-based addresses in a B2B CRM almost always come from gated content, webinar registrations, or event list imports — channels where people deliberately avoid giving their work email. Invalid addresses point to a form without email validation or a sloppy CSV import.\n\nFIRST STEP: Build a filtered contact view on email containing gmail, yahoo, hotmail, and the role prefixes (info@, sales@). For each, decide: enrich to the work email, or mark as marketing-only so they stay out of sales lists. On Pro, add a freemail block rule to your highest-volume form so the problem stops compounding.\n\nWATCH FOR: Don't bulk-delete freemail contacts — some are real buyers using a personal address at a small company. Check whether they have deal or company associations before purging."
     }
-  ]
+  ],
+  "executive_summary": "This instance is functional but leaking accuracy. The high-severity issues share a pattern: records are entering the CRM without ownership or dedup gates, then nobody circles back. Fixing intake first, then cleaning historical records, prevents the same issues from rebuilding.\n\n1. Likely duplicate contacts detected — start here.\n2. Contacts missing owner assignment — start here.\n3. Inactive workflows still marked active — schedule this week."
 }

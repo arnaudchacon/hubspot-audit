@@ -1,4 +1,4 @@
-import type { AuditIssue, DuplicatesRawData, OwnersRawData, WorkflowsRawData, StaleDealsRawData, PhoneFormatRawData } from '@/lib/audit/types';
+import type { AuditIssue, AuditReport, DuplicatesRawData, OwnersRawData, WorkflowsRawData, StaleDealsRawData, PhoneFormatRawData, EmailQualityRawData, DealHygieneRawData } from '@/lib/audit/types';
 
 // ─── Shared system prompt ─────────────────────────────────────────────────────
 
@@ -26,8 +26,10 @@ Quote at least one specific record name, workflow name, or deal name from the da
 
 // ─── Data formatters ──────────────────────────────────────────────────────────
 
+// raw_data lists are complete (for drawers and CSV export); prompts only need
+// a representative sample, so every formatter slices before formatting.
 function formatClustersForPrompt(clusters: DuplicatesRawData['full_clusters']): string {
-  return clusters.map(cluster => {
+  return clusters.slice(0, 5).map(cluster => {
     const contactLines = cluster.contacts.map(
       c => `    ${c.name} | ${c.email} | ${c.domain}${c.phone_normalized ? ` | phone ends ${c.phone_normalized}` : ''}`
     );
@@ -42,20 +44,20 @@ function formatClustersForPrompt(clusters: DuplicatesRawData['full_clusters']): 
   }).join('\n\n');
 }
 
-function formatOrphansForPrompt(orphans: OwnersRawData['orphans_recent_5']): string {
-  return orphans.map(
+function formatOrphansForPrompt(orphans: OwnersRawData['orphans']): string {
+  return orphans.slice(0, 5).map(
     o => `  - ${o.name} (${o.email}) — created ${o.created_at}, ${o.days_old} days ago`
   ).join('\n');
 }
 
 function formatZombiesForPrompt(zombies: WorkflowsRawData['zombie_full_list']): string {
-  return zombies.map(
+  return zombies.slice(0, 8).map(
     w => `  - "${w.name}" | last enrollment: ${w.last_enrollment_date} (${w.days_since_enrollment} days ago) | pattern: ${w.name_pattern_hint}`
   ).join('\n');
 }
 
 function formatDealsForPrompt(deals: StaleDealsRawData['stale_full_list']): string {
-  return deals.map(
+  return deals.slice(0, 5).map(
     d => `  - "${d.name}" | ${d.stage} | $${d.amount_usd.toLocaleString()} | ${d.days_inactive} days inactive | type: ${d.deal_type_hint}`
   ).join('\n');
 }
@@ -98,7 +100,7 @@ Write your three-section recommendation now. Quote at least one specific cluster
 
 function formatOwnersPrompt(issue: AuditIssue): string {
   const d = issue.raw_data as unknown as OwnersRawData;
-  const orphansText = formatOrphansForPrompt(d.orphans_recent_5);
+  const orphansText = formatOrphansForPrompt(d.orphans);
   const dist = d.date_distribution;
 
   return `${SYSTEM_PROMPT}
@@ -206,6 +208,75 @@ Important context:
 Write your three-section recommendation now. Note which formats appear in the data and what that mix suggests about the intake channels. The FIRST STEP should be the actual fix path (Operations Hub workflow vs one-time CSV cleanup) based on whether the user likely has Operations Hub.`;
 }
 
+function formatEmailQualityPrompt(issue: AuditIssue): string {
+  const d = issue.raw_data as unknown as EmailQualityRawData;
+  const REASON_LABELS: Record<string, string> = {
+    invalid: 'invalid syntax',
+    freemail: 'personal freemail',
+    role_based: 'role-based inbox',
+  };
+  const samplesText = d.samples
+    .slice(0, 8)
+    .map(s => `  - ${s.name} | ${s.email} | ${REASON_LABELS[s.reason] ?? s.reason}`)
+    .join('\n');
+
+  return `${SYSTEM_PROMPT}
+
+Issue detected: Low-quality email addresses on contacts.
+Severity: ${issue.severity}
+
+Audit data:
+- Flagged contacts: ${d.flagged_count} of ${d.total_count} (${d.percentage.toFixed(0)}%)
+- Personal freemail addresses (gmail, yahoo, etc.): ${d.freemail_count}
+- Role-based inboxes (info@, sales@, etc.): ${d.role_count}
+- Invalid syntax: ${d.invalid_count}
+
+Sample of flagged contacts:
+${samplesText}
+
+Important context:
+- HubSpot auto-associates contacts to companies by matching the email domain. Freemail contacts never get associated, so company-level reporting and ABM lists silently miss them.
+- Role-based inboxes (info@, sales@) tank email deliverability and get flagged by spam filters; sequences sent to them hurt the whole domain's sender reputation.
+- HubSpot has no native email validation on Free/Starter. Real fix paths: collect the real work email via a required form field with a freemail block rule (form settings on Pro), or enrich via a third-party tool.
+- Freemail contacts in a B2B CRM usually enter via event lists, webinar registrations, or lead magnets where people deliberately avoid giving their work address.
+
+Write your three-section recommendation now. Quote at least one specific contact from the sample and use the freemail/role/invalid mix to infer which intake channel produced them.`;
+}
+
+function formatDealHygienePrompt(issue: AuditIssue): string {
+  const d = issue.raw_data as unknown as DealHygieneRawData;
+  const dealsText = d.flagged_deals
+    .slice(0, 8)
+    .map(f => {
+      const problems = f.problems
+        .map(p => (p === 'missing_owner' ? 'no owner' : 'no amount'))
+        .join(' + ');
+      return `  - "${f.name}" | ${f.stage} | ${f.amount_usd > 0 ? `$${f.amount_usd.toLocaleString()}` : 'no amount'} | ${problems}`;
+    })
+    .join('\n');
+
+  return `${SYSTEM_PROMPT}
+
+Issue detected: Active-pipeline deals that can't be forecast.
+Severity: ${issue.severity}
+
+Audit data:
+- Flagged deals: ${d.flagged_count} of ${d.total_active} active deals
+- Missing owner: ${d.missing_owner_count}
+- Missing or zero amount: ${d.missing_amount_count}
+
+Specific flagged deals:
+${dealsText}
+
+Important context:
+- HubSpot forecasts and rep dashboards group deals by owner. A deal with no owner exists in the pipeline total but appears in NO ONE's forecast — it's money nobody is accountable for.
+- Deals with no amount contribute $0 to weighted pipeline, so pipeline coverage looks worse than reality — or the rep is hiding a number they don't want scrutinized.
+- Fix at the source: HubSpot Pro supports conditional stage properties (Settings > Objects > Deals > Pipelines > edit a stage) to require amount and owner before a deal can enter a stage. Starter/Free can't enforce this; it needs a manual weekly view.
+- Common root causes: deals created by workflow or API integration without owner mapping, or reps skipping fields when creating deals from the mobile app.
+
+Write your three-section recommendation now. Quote at least one specific deal from the data. If most flagged deals share a problem type (all missing owner vs all missing amount), say what that pattern suggests.`;
+}
+
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 const promptBuilders: Record<string, (issue: AuditIssue) => string> = {
@@ -213,11 +284,37 @@ const promptBuilders: Record<string, (issue: AuditIssue) => string> = {
   owners:       formatOwnersPrompt,
   workflows:    formatWorkflowsPrompt,
   stale_deals:  formatStaleDealsPrompt,
+  deal_hygiene: formatDealHygienePrompt,
   phone_format: formatPhoneFormatPrompt,
+  email_quality: formatEmailQualityPrompt,
 };
 
 export function buildPromptForIssue(issue: AuditIssue): string {
   const builder = promptBuilders[issue.check_id];
   if (!builder) throw new Error(`No prompt builder for check_id: ${issue.check_id}`);
   return builder(issue);
+}
+
+// ─── Executive summary ────────────────────────────────────────────────────────
+
+export function buildExecutiveSummaryPrompt(report: AuditReport): string {
+  const issueLines = report.issues
+    .map(i => `  - [${i.severity}] ${i.title}: ${i.detail}`)
+    .join('\n');
+
+  return `You are a senior RevOps consultant who has personally cleaned up dozens of HubSpot instances at B2B companies. You just finished an audit and are writing the executive summary at the top of the report. The reader is the ops lead who commissioned the audit.
+
+Audit results:
+- Overall health score: ${report.overall_score}/100
+- Dataset: ${report.dataset_summary.contacts} contacts, ${report.dataset_summary.deals} deals, ${report.dataset_summary.workflows} workflows
+- Detected issues:
+${issueLines}
+
+Write the summary in this exact structure:
+
+First, one paragraph (50–75 words): the honest overall state of this instance and the single most important theme connecting the issues. No greeting, no restating the score.
+
+Then a blank line, then exactly three lines, each starting "1. ", "2. ", "3. " — the three actions to take this week, in priority order, each under 15 words, each naming the specific issue it addresses.
+
+Banned words: leverage, synergize, unlock, transform, empower, robust, seamless, holistic, ensure, comprehensive. Write like you're talking to a peer, not writing a LinkedIn post.`;
 }

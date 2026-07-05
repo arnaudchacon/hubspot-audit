@@ -1,6 +1,6 @@
 // Run once via: npm run cache-demo
-// Calls Gemini 5 times (once per check) and saves the full report to
-// data/cached-recommendations.json. After this, the demo endpoint serves
+// Calls Gemini once per detected issue (7 checks) and saves the full report
+// to data/cached-recommendations.json. After this, the demo endpoint serves
 // from that file — zero Gemini calls per demo view.
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
@@ -22,8 +22,8 @@ async function main() {
   const report = runAudit(demoDataset as unknown as Dataset);
   console.log(`Score: ${report.overall_score}/100 — ${report.issues.length} issues`);
 
-  console.log('\nGenerating AI recommendations (5 Gemini calls)...');
-  const reportWithRecs = await addRecommendations(report);
+  console.log(`\nGenerating AI recommendations (${report.issues.length + 1} Gemini calls, paced for the free tier)...`);
+  const reportWithRecs = await addRecommendations(report, { paceMs: 13_000 });
 
   const outPath = resolve(process.cwd(), 'data/cached-recommendations.json');
   writeFileSync(outPath, JSON.stringify(reportWithRecs, null, 2));

@@ -1,8 +1,10 @@
-import type { AuditIssue } from '@/lib/audit/types';
+import type { AuditIssue, Severity } from '@/lib/audit/types';
 
-// Tuned deduction values (from AUDIT_CHECKS_SPEC.md recommended adjustment):
-// 2 HIGH + 2 MEDIUM + 1 LOW = 28 + 14 + 3 = 45 → score 55 ("Below median")
-const DEDUCTIONS = { HIGH: 14, MEDIUM: 7, LOW: 3 } as const;
+// Rebalanced for 7 checks (v3): with more checks running, per-issue deductions
+// are slightly smaller so a typical messy-but-real instance still lands in the
+// 45–60 range rather than free-falling. Exported so the UI legend stays in
+// sync with the actual math.
+export const DEDUCTIONS: Record<Severity, number> = { HIGH: 12, MEDIUM: 6, LOW: 3 };
 
 export function calculateScore(issues: AuditIssue[]): {
   score: number;
@@ -16,9 +18,9 @@ export function calculateScore(issues: AuditIssue[]): {
     interpretation = 'Healthy. Your CRM is in good shape.';
   } else if (score >= 70) {
     interpretation = 'Generally healthy with some hygiene issues to address.';
-  } else if (score >= 55) {
+  } else if (score >= 50) {
     interpretation = 'Below what we\'d expect for a healthy instance. Several issues are likely impacting reporting accuracy.';
-  } else if (score >= 40) {
+  } else if (score >= 35) {
     interpretation = 'Significant data quality problems. Reporting and forecasting are likely unreliable.';
   } else {
     interpretation = 'Critical issues across multiple dimensions. Recommend a structured cleanup project.';

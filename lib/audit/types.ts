@@ -40,11 +40,37 @@ export interface Dataset {
 // AuditIssue.raw_data stays Record<string,unknown> for backward compat.
 // Use these interfaces in check files and cast in prompts.ts.
 
+// Compact contact snapshot used in review pairs (greyzone triage).
+export interface ReviewContact {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  domain: string;
+  owner_id: string | null;
+  created_at: string;
+}
+
+export interface ReviewPair {
+  pair_id: string;
+  score: number;
+  subscores: {
+    name: number;
+    email: number;
+    domain: number;
+    phone: number;
+  };
+  a: ReviewContact;
+  b: ReviewContact;
+}
+
 export interface DuplicatesRawData {
   // v0 fields
   cluster_count: number;
   affected_contacts: number;
   total_contacts: number;
+  // v3: borderline pairs (below auto-merge threshold) for human review
+  review_pairs: ReviewPair[];
   // v1 additions
   full_clusters: Array<{
     cluster_id: string;
@@ -70,8 +96,8 @@ export interface OwnersRawData {
   missing_count: number;
   total_count: number;
   percentage: number;
-  // v1 additions
-  orphans_recent_5: Array<{
+  // v1 additions — full list, most recently created first
+  orphans: Array<{
     name: string;
     email: string;
     created_at: string;
@@ -115,13 +141,41 @@ export interface StaleDealsRawData {
 export interface PhoneFormatRawData {
   // v0 fields
   format_distribution: Record<string, number>;
-  examples: Record<string, string>;
   // v1 additions
   format_examples_with_counts: Array<{
     format: string;
     count: number;
     examples: string[];
     description: string;
+  }>;
+}
+
+// --- v3 checks ---
+
+export interface EmailQualityRawData {
+  flagged_count: number;
+  total_count: number;
+  percentage: number;
+  invalid_count: number;
+  freemail_count: number;
+  role_count: number;
+  samples: Array<{
+    name: string;
+    email: string;
+    reason: 'invalid' | 'freemail' | 'role_based';
+  }>;
+}
+
+export interface DealHygieneRawData {
+  flagged_count: number;
+  total_active: number;
+  missing_owner_count: number;
+  missing_amount_count: number;
+  flagged_deals: Array<{
+    name: string;
+    stage: string;
+    amount_usd: number;
+    problems: Array<'missing_owner' | 'missing_amount'>;
   }>;
 }
 
@@ -145,5 +199,6 @@ export interface AuditReport {
   };
   overall_score: number;
   score_interpretation: string;
+  executive_summary?: string;
   issues: AuditIssue[];
 }

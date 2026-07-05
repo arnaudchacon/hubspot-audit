@@ -16,7 +16,7 @@ export function OwnersExpanded({ issue }: Props) {
   const d = issue.raw_data as unknown as OwnersRawData;
   const dist = d.date_distribution;
 
-  const rows = d.orphans_recent_5.map(o => ({
+  const rows = d.orphans.slice(0, 25).map(o => ({
     name:    o.name,
     email:   o.email,
     created: formatDate(o.created_at),
@@ -43,10 +43,16 @@ export function OwnersExpanded({ issue }: Props) {
         className="text-[11px] font-semibold uppercase tracking-[0.05em] mb-3"
         style={{ color: 'var(--text-tertiary)' }}
       >
-        5 Most Recently Created
+        Most Recently Created
       </p>
 
       <DataTable columns={COLUMNS} rows={rows} />
+
+      {d.orphans.length > rows.length && (
+        <p className="text-[12px] mt-3" style={{ color: 'var(--text-tertiary)' }}>
+          Showing {rows.length} of {d.orphans.length} — download the CSV for the full list.
+        </p>
+      )}
     </div>
   );
 }

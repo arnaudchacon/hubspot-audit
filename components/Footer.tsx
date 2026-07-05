@@ -1,7 +1,7 @@
 export function Footer() {
   return (
-    <footer className="border-t border-border py-6 px-6">
-      <div className="max-w-content mx-auto flex items-center justify-between">
+    <footer className="border-t border-border py-8 px-6 no-print">
+      <div className="max-w-content mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <p className="text-caption text-text-tertiary">
           Built by{' '}
           <a
@@ -20,7 +20,9 @@ export function Footer() {
             arnaudchacon@gmail.com
           </a>
         </p>
-        <p className="text-caption text-text-tertiary">Open to RevOps and finance ops roles in HK / SG / KL</p>
+        <p className="text-caption text-text-tertiary">
+          Data is processed in memory and never stored. No accounts, no tracking.
+        </p>
       </div>
     </footer>
   );

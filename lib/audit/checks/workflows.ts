@@ -47,10 +47,6 @@ export function checkWorkflows(workflows: Workflow[]): AuditIssue | null {
     raw_data: {
       zombie_count: zombies.length,
       total_active: active.length,
-      zombie_workflows: zombies.map(w => ({
-        name: w.name,
-        last_enrollment: w.last_enrollment_date,
-      })),
       zombie_full_list: zombieFullList,
     },
   };

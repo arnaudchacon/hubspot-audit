@@ -25,6 +25,9 @@ const config: Config = {
         "accent-hover":   "var(--accent-hover)",
         "accent-bg":      "var(--accent-bg)",
 
+        ink:              "var(--ink)",
+        "ink-hover":      "var(--ink-hover)",
+
         "severity-high":      "var(--severity-high)",
         "severity-high-bg":   "var(--severity-high-bg)",
         "severity-medium":    "var(--severity-medium)",

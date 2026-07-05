@@ -47,7 +47,6 @@ export function checkStaleDeals(deals: Deal[]): AuditIssue | null {
 
   const staleFullList: StaleDealsRawData['stale_full_list'] = [...stale]
     .sort((a, b) => b.amount_usd - a.amount_usd)
-    .slice(0, 5)
     .map(d => ({
       name: d.name,
       stage: d.stage,
@@ -67,14 +66,6 @@ export function checkStaleDeals(deals: Deal[]): AuditIssue | null {
       stale_count: stale.length,
       arr_at_risk_usd: arrAtRisk,
       days_oldest: maxDaysSinceActivity,
-      sample_deals: stale.slice(0, 3).map(d => ({
-        name: d.name,
-        stage: d.stage,
-        amount: d.amount_usd,
-        days_inactive: Math.floor(
-          (Date.now() - new Date(d.last_activity_date).getTime()) / (1000 * 60 * 60 * 24)
-        ),
-      })),
       stale_full_list: staleFullList,
     },
   };

@@ -48,9 +48,6 @@ export function checkPhoneFormat(contacts: Contact[]): AuditIssue | null {
     severity = 'LOW';
   }
 
-  const exampleFor = (bucket: PhoneBucket) =>
-    contacts.find(c => classifyPhone(c.phone) === bucket)?.phone;
-
   const formatExamplesWithCounts: PhoneFormatRawData['format_examples_with_counts'] =
     significantBuckets.map(([format, count]) => ({
       format,
@@ -67,12 +64,6 @@ export function checkPhoneFormat(contacts: Contact[]): AuditIssue | null {
     raw_data: {
       format_distribution: buckets,
       significant_bucket_count: numSignificant,
-      examples: {
-        plus_format: exampleFor('plus_format'),
-        double_zero: exampleFor('double_zero'),
-        parentheses: exampleFor('parentheses'),
-        no_prefix: exampleFor('no_prefix'),
-      },
       format_examples_with_counts: formatExamplesWithCounts,
     },
   };

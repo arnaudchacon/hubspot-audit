@@ -1,6 +1,6 @@
 import type { AuditIssue, AuditReport } from '@/lib/audit/types';
 import { generateRecommendation } from '@/lib/ai/gemini';
-import { buildPromptForIssue } from '@/lib/ai/prompts';
+import { buildPromptForIssue, buildExecutiveSummaryPrompt } from '@/lib/ai/prompts';
 
 // Fallbacks when Gemini is unavailable. Use the same ROOT CAUSE / FIRST STEP /
 // WATCH FOR labels as the live prompts so IssueCard's parseRecommendation()
@@ -18,29 +18,82 @@ export const FALLBACK_RECOMMENDATIONS: Record<string, string> = {
   stale_deals:
     'ROOT CAUSE: Deals go stale when reps stop updating them but don\'t close them as lost — usually because closing lost feels like admitting failure, or because the deal might still technically come back someday. The result is a pipeline that looks healthy on paper and is useless for forecasting.\n\nFIRST STEP: Filter your deal view by last activity date, sort ascending. For each stale deal: move it to Closed Lost with a reason code, or create a custom "On Hold" stage that excludes it from your forecast. Don\'t just update the activity date — that masks the problem.\n\nWATCH FOR: The reason codes matter more than the cleanup. If you see a pattern (all stale deals are in Negotiation, all are enterprise-size), that\'s a process signal, not a data signal.',
 
+  email_quality:
+    'ROOT CAUSE: Freemail and role-based addresses in a B2B CRM almost always come from gated content, webinar registrations, or event list imports — channels where people deliberately avoid giving their work email. Invalid addresses point to a form without email validation or a sloppy CSV import.\n\nFIRST STEP: Build a filtered contact view on email containing gmail, yahoo, hotmail, and the role prefixes (info@, sales@). For each, decide: enrich to the work email, or mark as marketing-only so they stay out of sales lists. On Pro, add a freemail block rule to your highest-volume form so the problem stops compounding.\n\nWATCH FOR: Don\'t bulk-delete freemail contacts — some are real buyers using a personal address at a small company. Check whether they have deal or company associations before purging.',
+
+  deal_hygiene:
+    'ROOT CAUSE: Deals with no owner or no amount are usually created by an integration or workflow that doesn\'t map those fields, or by reps skipping fields on quick-create. Either way, these deals sit in your pipeline total but appear in no one\'s forecast — money nobody is accountable for.\n\nFIRST STEP: Filter your deal board by "Deal owner is unknown" and "Amount is unknown," assign an owner and a real number to each, and note who or what created them. On Pro, make amount and owner required via conditional stage properties (Settings > Objects > Deals > Pipelines) so a deal can\'t advance without them.\n\nWATCH FOR: If the flagged deals were all created by the same integration, fixing the records without fixing the field mapping means new broken deals next week. Trace the source before you clean.',
+
   phone_format:
     'ROOT CAUSE: Mixed phone formats are a symptom of uncoordinated intake channels — each source preserves whatever format it received. The problem isn\'t cosmetic; calling integrations and SMS workflows will silently skip records that don\'t match E.164 (+CountryCode then digits, no separators).\n\nFIRST STEP: Export to CSV, run a find-and-replace pass to strip non-numeric characters, add the country code prefix, re-import with "Update existing contacts" selected. On Operations Hub Starter and above, you can create a Data Quality Workflow to enforce E.164 on new records and eliminate the problem at the source.\n\nWATCH FOR: Before you start, spot-check 10 records manually. If your data mixes US domestic and international numbers, the normalization logic is different for each — don\'t batch them together.',
 };
 
-export async function addRecommendations(report: AuditReport): Promise<AuditReport> {
-  const issues = await Promise.all(
-    report.issues.map(async (issue): Promise<AuditIssue> => {
-      try {
-        const prompt = buildPromptForIssue(issue);
-        const ai_recommendation = await generateRecommendation(prompt);
-        return { ...issue, ai_recommendation };
-      } catch (err) {
-        // Log the failure reason so Vercel runtime logs reveal whether Gemini
-        // is failing (missing key, rate limit, network) vs. some other path.
-        const message = err instanceof Error ? err.message : String(err);
-        console.error(`[gemini-fallback] check=${issue.check_id} reason=${message}`);
-        return {
-          ...issue,
-          ai_recommendation: FALLBACK_RECOMMENDATIONS[issue.check_id] ?? 'No recommendation available.',
-        };
-      }
-    })
-  );
+// Deterministic summary used when the Gemini call fails — built from the
+// issues themselves so it still reads as specific to this audit.
+function buildFallbackSummary(report: AuditReport): string {
+  const high = report.issues.filter(i => i.severity === 'HIGH');
+  const top = report.issues.slice(0, 3);
+  const theme = high.length >= 2
+    ? 'The high-severity issues share a pattern: records are entering the CRM without ownership or dedup gates, then nobody circles back.'
+    : 'Most of what we found is accumulated drift rather than an actively broken intake — fixable in a focused cleanup pass.';
+  const para = `This instance is functional but leaking accuracy. ${theme} Fixing intake first, then cleaning historical records, prevents the same issues from rebuilding.`;
+  const priorities = top
+    .map((i, idx) => `${idx + 1}. ${i.title} — ${i.severity === 'HIGH' ? 'start here' : 'schedule this week'}.`)
+    .join('\n');
+  return `${para}\n\n${priorities}`;
+}
 
-  return { ...report, issues };
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+interface AddRecommendationsOptions {
+  // When set, calls run sequentially with this delay between them — used by
+  // the offline cache script to stay under the free tier's 5 req/min without
+  // burning retries. The runtime path stays parallel (429s are retried).
+  paceMs?: number;
+}
+
+export async function addRecommendations(
+  report: AuditReport,
+  options: AddRecommendationsOptions = {}
+): Promise<AuditReport> {
+  const generateForIssue = async (issue: AuditIssue): Promise<AuditIssue> => {
+    try {
+      const prompt = buildPromptForIssue(issue);
+      const ai_recommendation = await generateRecommendation(prompt);
+      return { ...issue, ai_recommendation };
+    } catch (err) {
+      // Log the failure reason so Vercel runtime logs reveal whether Gemini
+      // is failing (missing key, rate limit, network) vs. some other path.
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(`[gemini-fallback] check=${issue.check_id} reason=${message}`);
+      return {
+        ...issue,
+        ai_recommendation: FALLBACK_RECOMMENDATIONS[issue.check_id] ?? 'No recommendation available.',
+      };
+    }
+  };
+
+  let issues: AuditIssue[];
+  if (options.paceMs) {
+    issues = [];
+    for (const issue of report.issues) {
+      issues.push(await generateForIssue(issue));
+      await sleep(options.paceMs);
+    }
+  } else {
+    issues = await Promise.all(report.issues.map(generateForIssue));
+  }
+
+  const withIssues = { ...report, issues };
+
+  let executive_summary: string;
+  try {
+    executive_summary = await generateRecommendation(buildExecutiveSummaryPrompt(withIssues));
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error(`[gemini-fallback] check=executive_summary reason=${message}`);
+    executive_summary = buildFallbackSummary(withIssues);
+  }
+
+  return { ...withIssues, executive_summary };
 }

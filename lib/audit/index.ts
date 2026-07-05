@@ -3,7 +3,9 @@ import { checkDuplicates } from '@/lib/audit/checks/duplicates';
 import { checkOwners } from '@/lib/audit/checks/owners';
 import { checkWorkflows } from '@/lib/audit/checks/workflows';
 import { checkStaleDeals } from '@/lib/audit/checks/stale-deals';
+import { checkDealHygiene } from '@/lib/audit/checks/deal-hygiene';
 import { checkPhoneFormat } from '@/lib/audit/checks/phone-format';
+import { checkEmailQuality } from '@/lib/audit/checks/email-quality';
 import { calculateScore } from '@/lib/audit/scoring';
 
 const SEVERITY_ORDER = { HIGH: 0, MEDIUM: 1, LOW: 2 } as const;
@@ -14,7 +16,9 @@ export function runAudit(dataset: Dataset): AuditReport {
     checkOwners(dataset.contacts),
     checkWorkflows(dataset.workflows),
     checkStaleDeals(dataset.deals),
+    checkDealHygiene(dataset.deals),
     checkPhoneFormat(dataset.contacts),
+    checkEmailQuality(dataset.contacts),
   ];
 
   const issues = rawIssues

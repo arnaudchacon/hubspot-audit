@@ -2,21 +2,22 @@
 
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { AuditReport as AuditReportView } from '@/components/AuditReport';
+import type { DuplicatesRawData } from '@/lib/audit/types';
 import { loadReport, type LoadedReport } from '@/lib/report-loader';
+import { ReviewWorkbench } from '@/components/review/ReviewWorkbench';
 
 function Spinner() {
   return (
     <div className="min-h-screen bg-bg flex items-center justify-center">
       <div className="flex flex-col items-center gap-3">
         <div className="w-6 h-6 border-2 border-border border-t-accent rounded-full animate-spin" />
-        <p className="text-caption text-text-tertiary uppercase tracking-[0.05em]">Loading report…</p>
+        <p className="text-caption text-text-tertiary uppercase tracking-[0.05em]">Loading review…</p>
       </div>
     </div>
   );
 }
 
-function AuditContent() {
+function ReviewContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -38,20 +39,30 @@ function AuditContent() {
   if (error) {
     return (
       <div className="min-h-screen bg-bg flex items-center justify-center">
-        <p className="text-body text-text-secondary">Could not load the report. Please try again.</p>
+        <p className="text-body text-text-secondary">Could not load the review. Please try again.</p>
       </div>
     );
   }
 
   if (!loaded) return <Spinner />;
 
-  return <AuditReportView report={loaded.report} source={loaded.source} historyId={loaded.historyId} />;
+  const duplicatesIssue = loaded.report.issues.find(i => i.check_id === 'duplicates');
+  const rawData = duplicatesIssue?.raw_data as unknown as DuplicatesRawData | undefined;
+
+  return (
+    <ReviewWorkbench
+      pairs={rawData?.review_pairs ?? []}
+      clusters={rawData?.full_clusters ?? []}
+      datasetKey={loaded.historyId}
+      reportHref={`/audit?id=${loaded.historyId}`}
+    />
+  );
 }
 
-export default function AuditPage() {
+export default function ReviewPage() {
   return (
     <Suspense fallback={<Spinner />}>
-      <AuditContent />
+      <ReviewContent />
     </Suspense>
   );
 }

@@ -25,7 +25,29 @@ function getModel() {
   return _model;
 }
 
-export async function generateRecommendation(prompt: string): Promise<string> {
-  const result = await getModel().generateContent(prompt);
-  return result.response.text().trim();
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// The free tier allows 5 requests/min and a full audit makes 8 (7 issues +
+// executive summary), so 429s are expected, not exceptional. The error body
+// includes a retryDelay — honor it (capped) and retry before falling back.
+function parseRetryDelayMs(message: string): number {
+  const match = message.match(/retry in ([\d.]+)s/i) ?? message.match(/"retryDelay":"(\d+)s"/);
+  const seconds = match ? parseFloat(match[1]) : 20;
+  // The API reports when the quota window actually frees — trust it, capped
+  // to stay inside the route's 60s budget.
+  return Math.min(Math.ceil(seconds + 2), 55) * 1000;
+}
+
+export async function generateRecommendation(prompt: string, retries = 2): Promise<string> {
+  try {
+    const result = await getModel().generateContent(prompt);
+    return result.response.text().trim();
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    if (retries > 0 && message.includes('429')) {
+      await sleep(parseRetryDelayMs(message));
+      return generateRecommendation(prompt, retries - 1);
+    }
+    throw err;
+  }
 }

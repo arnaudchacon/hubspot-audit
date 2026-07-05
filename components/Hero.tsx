@@ -10,52 +10,38 @@ export function Hero() {
 
   return (
     <>
-      <main className="min-h-screen bg-bg flex items-center justify-center px-6 py-24">
+      <section className="px-6 pt-24 pb-20 border-b border-border">
+        <div className="max-w-content mx-auto">
+          <div className="max-w-[680px]">
+            <p className="text-caption text-accent uppercase tracking-[0.08em] font-mono mb-5">
+              CRM data quality, audited
+            </p>
 
-        <div className="w-full max-w-hero flex flex-col items-start gap-6">
+            <h1 className="font-serif text-text-primary text-[44px] md:text-[60px] leading-[1.05] tracking-[-0.01em] mb-6">
+              Most HubSpot instances are quietly broken.
+            </h1>
 
-          <p className="text-caption text-text-tertiary uppercase tracking-[0.05em] font-mono">
-            FIG 00 — A CRM audit tool
-          </p>
+            <p className="text-body-lg text-text-secondary max-w-[540px] mb-8">
+              Run seven audit checks against your CRM export and get a scored report:
+              duplicate contacts, ownership gaps, dead automation, unforecastable pipeline —
+              each with a specific fix, the affected records, and an exportable cleanup plan.
+            </p>
 
-          <h1 className="font-serif text-text-primary text-hero-mobile md:text-hero-desktop">
-            Most HubSpot instances<br />are quietly broken.
-          </h1>
+            <div className="flex items-center gap-3">
+              <Link href="/audit?source=demo">
+                <Button variant="primary">See a sample report</Button>
+              </Link>
+              <Button variant="secondary" onClick={() => setShowUpload(true)}>
+                Audit your CSV
+              </Button>
+            </div>
 
-          <p className="text-body-lg text-text-secondary max-w-[560px]">
-            Upload your contacts export and get a scored audit report with specific, actionable fix recommendations.
-          </p>
-
-          <div className="flex items-center gap-3 pt-2">
-            <Link href="/audit?source=demo">
-              <Button variant="primary">Run Demo Audit</Button>
-            </Link>
-            <Button variant="secondary" onClick={() => setShowUpload(true)}>
-              Upload Your CSV
-            </Button>
+            <p className="text-body-sm text-text-tertiary mt-6">
+              No account. Files are processed in memory and never stored — closing the tab is the only cleanup.
+            </p>
           </div>
-
-          <p className="text-caption text-text-tertiary mt-6">
-            Built by{' '}
-            <a
-              href="https://www.linkedin.com/in/arnaud-chacon/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-text-secondary hover:text-text-primary transition-colors duration-150"
-            >
-              Arnaud Chacon
-            </a>
-            {' · '}
-            <a
-              href="mailto:arnaudchacon@gmail.com"
-              className="text-text-secondary hover:text-text-primary transition-colors duration-150"
-            >
-              arnaudchacon@gmail.com
-            </a>
-          </p>
-
         </div>
-      </main>
+      </section>
 
       {showUpload && <UploadDropzone onClose={() => setShowUpload(false)} />}
     </>

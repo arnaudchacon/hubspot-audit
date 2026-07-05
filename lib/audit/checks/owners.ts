@@ -14,9 +14,8 @@ export function checkOwners(contacts: Contact[]): AuditIssue | null {
 
   const now = Date.now();
 
-  const orphansRecent5: OwnersRawData['orphans_recent_5'] = [...orphans]
+  const orphanList: OwnersRawData['orphans'] = [...orphans]
     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-    .slice(0, 5)
     .map(c => ({
       name: `${c.first_name} ${c.last_name}`,
       email: c.email,
@@ -44,12 +43,7 @@ export function checkOwners(contacts: Contact[]): AuditIssue | null {
       missing_count: missing,
       total_count: total,
       percentage: pct,
-      sample_orphans: orphans.slice(0, 5).map(c => ({
-        name: `${c.first_name} ${c.last_name}`,
-        email: c.email,
-        created_at: c.created_at,
-      })),
-      orphans_recent_5: orphansRecent5,
+      orphans: orphanList,
       date_distribution: dateDistribution,
     },
   };

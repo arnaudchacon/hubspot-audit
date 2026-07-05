@@ -13,7 +13,7 @@ export function AffectedRecords({ issue, onOpen }: AffectedRecordsProps) {
   if (!renderer) return null;
 
   return (
-    <div className="mt-4 pt-4 flex justify-end" style={{ borderTop: '1px solid var(--border)' }}>
+    <div className="mt-4 pt-4 flex justify-end no-print" style={{ borderTop: '1px solid var(--border)' }}>
       <button
         onClick={onOpen}
         className="text-[13px] font-medium transition-colors duration-150"

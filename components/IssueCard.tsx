@@ -1,4 +1,6 @@
-import type { AuditIssue } from '@/lib/audit/types';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+import type { AuditIssue, ReviewPair } from '@/lib/audit/types';
 import { Badge } from '@/components/ui/Badge';
 import { AffectedRecords } from '@/components/affected-records/AffectedRecords';
 
@@ -7,6 +9,7 @@ interface IssueCardProps {
   index: number;
   total: number;
   onViewRecords: () => void;
+  reviewHref?: string;
 }
 
 const SECTION_KEYS = ['ROOT CAUSE', 'FIRST STEP', 'WATCH FOR'] as const;
@@ -30,8 +33,12 @@ function parseRecommendation(text: string): Array<{ label: SectionKey; content: 
   });
 }
 
-export function IssueCard({ issue, index, total, onViewRecords }: IssueCardProps) {
+export function IssueCard({ issue, index, total, onViewRecords, reviewHref }: IssueCardProps) {
   const sections = issue.ai_recommendation ? parseRecommendation(issue.ai_recommendation) : null;
+
+  const reviewPairs = issue.check_id === 'duplicates'
+    ? ((issue.raw_data.review_pairs as ReviewPair[] | undefined) ?? [])
+    : [];
 
   // Severity-aware visual gradient — felt in peripheral vision before badges register.
   const severityClasses =
@@ -84,6 +91,21 @@ export function IssueCard({ issue, index, total, onViewRecords }: IssueCardProps
           ) : (
             <p className="text-body text-text-secondary">{issue.ai_recommendation}</p>
           )}
+        </div>
+      )}
+
+      {reviewPairs.length > 0 && reviewHref && (
+        <div className="mt-5 flex items-center justify-between gap-4 rounded-lg border border-border bg-accent-bg/60 px-4 py-3 no-print">
+          <p className="text-body-sm text-text-primary">
+            <span className="font-mono font-semibold">{reviewPairs.length}</span> borderline pair{reviewPairs.length !== 1 ? 's' : ''} scored
+            below the auto-merge threshold and need{reviewPairs.length === 1 ? 's' : ''} human review.
+          </p>
+          <Link
+            href={reviewHref}
+            className="inline-flex items-center gap-1.5 text-body-sm font-medium text-accent hover:text-accent-hover whitespace-nowrap transition-colors duration-150"
+          >
+            Open review workbench <ArrowRight size={14} />
+          </Link>
         </div>
       )}
 

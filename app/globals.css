@@ -17,10 +17,15 @@
   --text-tertiary:  #8A847A;
   --text-disabled:  #B8B2A6;
 
-  /* Accent — deep ink, distinctive against warm paper (use sparingly, max 3× per screen) */
-  --accent:       oklch(0.42 0.08 250);
-  --accent-hover: oklch(0.36 0.08 250);
-  --accent-bg:    oklch(0.95 0.02 250);
+  /* Accent — warm terracotta against paper (links, highlights; use sparingly).
+     Primary actions use ink, not the accent — accent is for emphasis only. */
+  --accent:       #B5511F;
+  --accent-hover: #93400F;
+  --accent-bg:    #F7E9E1;
+
+  /* Ink — primary action color (near-black buttons on paper) */
+  --ink:       #1A1614;
+  --ink-hover: #38322C;
 
   /* Severity */
   --severity-high:       #C73E3E;
@@ -59,5 +64,23 @@
 
   * {
     box-sizing: border-box;
+  }
+}
+
+/* ─── Print / PDF export ─────────────────────────────────────────────────── */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+  }
+
+  /* Cards should not split across pages */
+  .animate-fade-in {
+    break-inside: avoid;
+    animation: none !important;
+    opacity: 1 !important;
   }
 }

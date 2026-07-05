@@ -72,6 +72,9 @@ const WORKFLOW_ALIASES: Record<string, string> = {
   'lastenrollmentdate':       'last_enrollment_date',
 };
 
+// Server enforces the same cap in /api/audit-csv — keep the two in sync.
+const MAX_ROWS = 2000;
+
 // ─── Date normalizer ───────────────────────────────────────────────────────────
 
 function normalizeDate(raw: string): string | null {
@@ -104,12 +107,12 @@ function normalizeHeaders(
 function validateContacts(rows: Record<string, string>[]): string[] {
   const errors: string[] = [];
   if (rows.length === 0) return ['File has no data rows.'];
-  if (rows.length > 500) errors.push(`Too many rows: ${rows.length} found, max 500.`);
+  if (rows.length > MAX_ROWS) errors.push(`Too many rows: ${rows.length} found, max ${MAX_ROWS}.`);
   const required = ['id', 'first_name', 'last_name', 'email', 'phone', 'company_domain', 'owner_id', 'created_at'];
   const missing = required.filter(c => !(c in rows[0]));
   if (missing.length) return missing.map(c => `Missing column: "${c}"`);
   const seenIds = new Set<string>();
-  for (let i = 0; i < Math.min(rows.length, 500); i++) {
+  for (let i = 0; i < Math.min(rows.length, MAX_ROWS); i++) {
     const row = rows[i];
     const n = i + 2;
     if (!row.id) errors.push(`Row ${n}: missing id`);
@@ -128,7 +131,8 @@ function validateDeals(rows: Record<string, string>[]): string[] {
   const required = ['id', 'name', 'stage', 'amount_usd', 'created_at', 'last_activity_date'];
   const missing = required.filter(c => !(c in rows[0]));
   if (missing.length) return missing.map(c => `Missing column: "${c}"`);
-  for (let i = 0; i < Math.min(rows.length, 5); i++) {
+  if (rows.length > MAX_ROWS) errors.push(`Too many rows: ${rows.length} found, max ${MAX_ROWS}.`);
+  for (let i = 0; i < Math.min(rows.length, MAX_ROWS); i++) {
     const row = rows[i];
     const n = i + 2;
     if (!row.id) errors.push(`Row ${n}: missing id`);
@@ -152,7 +156,7 @@ function validateWorkflows(rows: Record<string, string>[]): string[] {
 // ─── Parsers ──────────────────────────────────────────────────────────────────
 
 function parseContacts(rows: Record<string, string>[]): Contact[] {
-  return rows.slice(0, 500).map(row => ({
+  return rows.slice(0, MAX_ROWS).map(row => ({
     id:             row.id,
     first_name:     row.first_name,
     last_name:      row.last_name,
@@ -198,14 +202,14 @@ const TAB_CONFIG = {
     required: true,
     hint: 'id, first_name, last_name, email, phone, company_domain, owner_id, created_at',
     template: '/csv-template.csv',
-    checks: ['duplicates', 'owners', 'phone format'],
+    checks: ['duplicates', 'owners', 'phone format', 'email quality'],
   },
   deals: {
     label: 'Deals',
     required: false,
     hint: 'id, name, stage, amount_usd, owner_id, contact_id, created_at, last_activity_date',
     template: '/csv-deals-template.csv',
-    checks: ['stale deals'],
+    checks: ['stale deals', 'deal hygiene'],
   },
   workflows: {
     label: 'Workflows',
@@ -316,7 +320,7 @@ export function UploadDropzone({ onClose }: UploadDropzoneProps) {
     ...(deals     ? TAB_CONFIG.deals.checks     : []),
     ...(workflows ? TAB_CONFIG.workflows.checks : []),
   ];
-  const totalChecks = 5;
+  const totalChecks = 7;
   const checksCount = checksAvailable.length;
 
   const currentFileName = fileNames[tab];
@@ -455,7 +459,7 @@ export function UploadDropzone({ onClose }: UploadDropzoneProps) {
                 <span className="text-text-primary font-medium">{checksCount} of {totalChecks} checks</span>
                 {' '}will run
                 {checksCount < totalChecks && (
-                  <> · upload {!deals && !workflows ? 'deals and workflows CSVs' : !deals ? 'a deals CSV' : 'a workflows CSV'} to run all 5</>
+                  <> · upload {!deals && !workflows ? 'deals and workflows CSVs' : !deals ? 'a deals CSV' : 'a workflows CSV'} to run all {totalChecks}</>
                 )}
               </>
             ) : (
