@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-05T05:49:34.423Z",
+  "generated_at": "2026-07-07T14:01:11.779Z",
   "dataset_summary": {
     "contacts": 56,
     "deals": 12,
@@ -428,7 +428,7 @@
           }
         ]
       },
-      "ai_recommendation": "ROOT CAUSE: Most duplicate contact problems trace back to a single intake path that never had a dedup gate — usually a form that fires on every submission without checking if that email already exists. The duplicates don't appear all at once; they compound quietly for months.\n\nFIRST STEP: Pull your contacts list, filter by email domain, and sort by create date. Clusters of the same domain created days apart are your duplicates. On Pro/Enterprise, Settings → Data Management → Duplicates surfaces the highest-confidence matches. On Free/Starter, you're doing this manually in a spreadsheet — export, sort on email, merge row by row.\n\nWATCH FOR: The trap most people fall into is merging without fixing the intake. The duplicates come back within weeks. Find out which form or import triggered the pattern first."
+      "ai_recommendation": "ROOT CAUSE: These duplicates, like Alex Martinez and Alex Martínez, likely stem from multiple data entry points (e.g., forms, imports) that don't check against existing contact records using fuzzy matching on name or phone, only exact email.\n\nFIRST STEP: If you're on Pro/Enterprise, go to Contacts > Duplicates and review the suggested merges. For Free/Starter, or if HubSpot's tool misses cases like \"Alex Martinez\" vs \"Alexa Martinez,\" export all contacts and use a spreadsheet to identify and merge them manually, then re-import.\n\nWATCH FOR: Manually merging without fixing your intake forms or import processes means these exact duplicates will reappear quickly. You'll spend all your time cleaning instead of preventing."
     },
     {
       "check_id": "owners",
@@ -444,79 +444,79 @@
             "name": "Tomás Silva",
             "email": "tomas@saopaulodefi.br",
             "created_at": "2024-07-15",
-            "days_old": 720
+            "days_old": 722
           },
           {
             "name": "Mei Lin",
             "email": "mei.lin@taipeicapital.tw",
             "created_at": "2024-07-08",
-            "days_old": 727
+            "days_old": 729
           },
           {
             "name": "Marc Hoffmann",
             "email": "m.hoffmann@bayernlogistik.de",
             "created_at": "2024-07-04",
-            "days_old": 731
+            "days_old": 733
           },
           {
             "name": "Hassan Khalil",
             "email": "hassan@gulfstreamcap.ae",
             "created_at": "2024-06-30",
-            "days_old": 735
+            "days_old": 737
           },
           {
             "name": "Aaron Mitchell",
             "email": "aaron.m@aucklandbio.nz",
             "created_at": "2024-06-25",
-            "days_old": 740
+            "days_old": 742
           },
           {
             "name": "Beatrice Verdi",
             "email": "b.verdi@romaclassico.it",
             "created_at": "2024-06-17",
-            "days_old": 748
+            "days_old": 750
           },
           {
             "name": "Vince Holloway",
             "email": "vince.holloway@manchestercap.uk",
             "created_at": "2024-06-13",
-            "days_old": 752
+            "days_old": 754
           },
           {
             "name": "Mehmet Yilmaz",
             "email": "mehmet@bosphoruslogi.com.tr",
             "created_at": "2024-06-08",
-            "days_old": 757
+            "days_old": 759
           },
           {
             "name": "James O'Brien",
             "email": "james.obrien@nordpay.eu",
             "created_at": "2024-05-19",
-            "days_old": 777
+            "days_old": 779
           },
           {
             "name": "Victor Almeida",
             "email": "victor@lisbonbio.pt",
             "created_at": "2024-05-02",
-            "days_old": 794
+            "days_old": 796
           },
           {
             "name": "Jin Park",
             "email": "jin.park@seoulai.kr",
             "created_at": "2024-04-29",
-            "days_old": 797
+            "days_old": 799
           },
           {
             "name": "Sophie Laurent",
             "email": "sophie.laurent@vivariofintech.fr",
             "created_at": "2024-04-22",
-            "days_old": 804
+            "days_old": 806
           },
           {
             "name": "Alex Martínez",
             "email": "a.martinez@stratosfinance.com",
             "created_at": "2024-04-08",
-            "days_old": 818
+            "days_old": 820
           }
         ],
         "date_distribution": {
@@ -525,7 +525,7 @@
           "older": 13
         }
       },
-      "ai_recommendation": "ROOT CAUSE: These 13 contacts, like Tomás Silva and Mei Lin, have no owner because they were created over two years ago and never assigned one, indicating an old cleanup task was missed, not a current intake misconfiguration.\n\nFIRST STEP: Go to Contacts > Contacts, filter by \"Contact owner is unknown,\" and use the bulk edit action to assign them to the correct reps. If you're on a Starter+ plan, you can build a workflow to automate this for *future* unknown contacts.\n\nWATCH FOR: Don't just assign them all to one person; you'll overload them. Distribute them based on region, industry, or whatever your current routing logic is, even if it's manual for these old records."
+      "ai_recommendation": "ROOT CAUSE: Old contacts like Tomás Silva are missing owners because no one ever cleaned up after previous owner deactivations or legacy import issues. This isn't a current intake problem, it's historical drift.\n\nFIRST STEP: Create a new active list for \"Contacts with no owner\" (Contacts > Lists > Create List). Then, bulk assign these 13 contacts to a generic \"Sales Admin\" or \"Unassigned Leads\" owner.\n\nWATCH FOR: Don't try to track down the \"right\" owner for each of these 700-day-old contacts. Just get them off the \"no owner\" list so they stop skewing reports."
     },
     {
       "check_id": "workflows",
@@ -539,24 +539,24 @@
           {
             "name": "Re-Engagement — Cold Leads (60 days)",
             "last_enrollment_date": "2025-08-14",
-            "days_since_enrollment": 325,
+            "days_since_enrollment": 327,
             "name_pattern_hint": "deprecated"
           },
           {
             "name": "Webinar Q4 2024 Follow-Up",
             "last_enrollment_date": "2024-12-18",
-            "days_since_enrollment": 564,
+            "days_since_enrollment": 566,
             "name_pattern_hint": "expired_campaign"
           },
           {
             "name": "Old Sales Onboarding Flow (legacy)",
             "last_enrollment_date": "2024-06-30",
-            "days_since_enrollment": 735,
+            "days_since_enrollment": 737,
             "name_pattern_hint": "deprecated"
           }
         ]
       },
-      "ai_recommendation": "ROOT CAUSE: Active workflows with no recent enrollments are usually campaigns or events that ended without anyone archiving them. They're not doing damage, but they count against your workflow limit and make it impossible to audit what's actually running.\n\nFIRST STEP: Go to Automation → Workflows, filter by Active, sort by enrollment count ascending. Anything at zero for 30+ days should be paused — not deleted. Deletion removes the enrollment history, which sometimes matters for attribution.\n\nWATCH FOR: Pausing a workflow doesn't unenroll contacts already in it. Check the \"Currently enrolled\" number before you pause — if it's non-zero on a workflow you think is dead, something is still triggering it."
+      "ai_recommendation": "ROOT CAUSE: These workflows are still active because they were never turned off after their purpose ended, like \"Webinar Q4 2024 Follow-Up\" which was tied to an expired campaign.\n\nFIRST STEP: Go to Automation > Workflows, filter by \"Active,\" and pause \"Re-Engagement — Cold Leads (60 days),\" \"Webinar Q4 2024 Follow-Up,\" and \"Old Sales Onboarding Flow (legacy).\" This frees up active workflow slots.\n\nWATCH FOR: Don't delete them yet. Pausing is reversible; deleting loses all enrollment history. You'll find it harder than expected to justify deletion later if you don't have a pause period first."
     },
     {
       "check_id": "stale_deals",
@@ -566,39 +566,39 @@
       "raw_data": {
         "stale_count": 4,
         "arr_at_risk_usd": 309000,
-        "days_oldest": 217,
+        "days_oldest": 219,
         "stale_full_list": [
           {
             "name": "Shanghai Quant — Strategic",
             "stage": "qualification",
             "amount_usd": 110000,
-            "days_inactive": 195,
+            "days_inactive": 197,
             "deal_type_hint": "enterprise"
           },
           {
             "name": "Nord Pay — Enterprise",
             "stage": "qualification",
             "amount_usd": 96000,
-            "days_inactive": 202,
+            "days_inactive": 204,
             "deal_type_hint": "enterprise"
           },
           {
             "name": "Helix Sec — Enterprise",
             "stage": "proposal",
             "amount_usd": 85000,
-            "days_inactive": 217,
+            "days_inactive": 219,
             "deal_type_hint": "enterprise"
           },
           {
             "name": "Bayern Logistik — Trial Extension",
             "stage": "proposal",
             "amount_usd": 18000,
-            "days_inactive": 178,
+            "days_inactive": 180,
             "deal_type_hint": "pilot"
           }
         ]
       },
-      "ai_recommendation": "ROOT CAUSE: Deals go stale when reps stop updating them but don't close them as lost — usually because closing lost feels like admitting failure, or because the deal might still technically come back someday. The result is a pipeline that looks healthy on paper and is useless for forecasting.\n\nFIRST STEP: Filter your deal view by last activity date, sort ascending. For each stale deal: move it to Closed Lost with a reason code, or create a custom \"On Hold\" stage that excludes it from your forecast. Don't just update the activity date — that masks the problem.\n\nWATCH FOR: The reason codes matter more than the cleanup. If you see a pattern (all stale deals are in Negotiation, all are enterprise-size), that's a process signal, not a data signal."
+      "ai_recommendation": "ROOT CAUSE: Sales reps aren't closing out lost deals, likely due to a lack of clear process or fear of impacting their metrics, leaving deals like \"Shanghai Quant — Strategic\" in active stages for over 197 days.\n\nFIRST STEP: Create a workflow (Automation > Workflows) that triggers when a deal has been in a stage for 60+ days without activity, then assigns a task to the deal owner to review and update the deal status. (Sales Hub Pro required for activity-based triggers).\n\nWATCH FOR: If you just mass-close these deals, you'll lose historical context on why \"Helix Sec — Enterprise\" stalled. Make sure reps use specific \"Closed Lost\" reasons or move deals to an \"On Hold\" stage to preserve insights for future sales cycles."
     },
     {
       "check_id": "deal_hygiene",
@@ -629,7 +629,7 @@
           }
         ]
       },
-      "ai_recommendation": "ROOT CAUSE: Deals with no owner or no amount are usually created by an integration or workflow that doesn't map those fields, or by reps skipping fields on quick-create. Either way, these deals sit in your pipeline total but appear in no one's forecast — money nobody is accountable for.\n\nFIRST STEP: Filter your deal board by \"Deal owner is unknown\" and \"Amount is unknown,\" assign an owner and a real number to each, and note who or what created them. On Pro, make amount and owner required via conditional stage properties (Settings > Objects > Deals > Pipelines) so a deal can't advance without them.\n\nWATCH FOR: If the flagged deals were all created by the same integration, fixing the records without fixing the field mapping means new broken deals next week. Trace the source before you clean."
+      "ai_recommendation": "ROOT CAUSE: These deals are unforecastable because reps or integrations aren't setting required fields. \"Meridian Capital — Pilot\" has no amount, and \"Vivario Fintech — Annual\" has no owner, both common omissions when deals are created quickly or by automation without proper mapping.\n\nFIRST STEP: If you're on Pro, go to Settings > Objects > Deals > Pipelines, edit your pipeline stages, and make \"Amount\" and \"Deal owner\" required properties for the \"proposal\" and \"discovery\" stages. Otherwise, create a weekly saved view of active deals where \"Amount is unknown\" or \"Deal owner is unknown.\"\n\nWATCH FOR: Reps will complain about the extra clicks if you make fields required. They'll try to push deals through without filling out the fields, so you'll need to monitor for incomplete data even with conditional properties."
     },
     {
       "check_id": "phone_format",
@@ -664,7 +664,7 @@
           }
         ]
       },
-      "ai_recommendation": "ROOT CAUSE: Mixed phone formats are a symptom of uncoordinated intake channels — each source preserves whatever format it received. The problem isn't cosmetic; calling integrations and SMS workflows will silently skip records that don't match E.164 (+CountryCode then digits, no separators).\n\nFIRST STEP: Export to CSV, run a find-and-replace pass to strip non-numeric characters, add the country code prefix, re-import with \"Update existing contacts\" selected. On Operations Hub Starter and above, you can create a Data Quality Workflow to enforce E.164 on new records and eliminate the problem at the source.\n\nWATCH FOR: Before you start, spot-check 10 records manually. If your data mixes US domestic and international numbers, the normalization logic is different for each — don't batch them together."
+      "ai_recommendation": "ROOT CAUSE: HubSpot doesn't normalize phone numbers on import, leading to mixed formats like `+1 415 555 0101` and `0033612345678` from different data sources, likely a mix of web forms and manual CSV uploads.\n\nFIRST STEP: If you have Operations Hub Starter or above, create a workflow (Automation > Workflows) that formats the \"Phone Number\" property to E.164. If not, export all contacts, standardize the phone numbers to E.164 in a spreadsheet, and re-import.\n\nWATCH FOR: Manually fixing these in HubSpot is a time sink; the property editor is clunky for bulk edits. Don't try to fix `0033612345678` by hand across 6 records."
     },
     {
       "check_id": "email_quality",
@@ -701,8 +701,8 @@
           }
         ]
       },
-      "ai_recommendation": "ROOT CAUSE: Freemail and role-based addresses in a B2B CRM almost always come from gated content, webinar registrations, or event list imports — channels where people deliberately avoid giving their work email. Invalid addresses point to a form without email validation or a sloppy CSV import.\n\nFIRST STEP: Build a filtered contact view on email containing gmail, yahoo, hotmail, and the role prefixes (info@, sales@). For each, decide: enrich to the work email, or mark as marketing-only so they stay out of sales lists. On Pro, add a freemail block rule to your highest-volume form so the problem stops compounding.\n\nWATCH FOR: Don't bulk-delete freemail contacts — some are real buyers using a personal address at a small company. Check whether they have deal or company associations before purging."
+      "ai_recommendation": "ROOT CAUSE: These low-quality emails, like olivia.brennan@gmail.com, probably came from lead magnet forms or webinar registrations where people used personal emails to avoid spam. HubSpot's auto-association by domain can't link these to companies.\n\nFIRST STEP: Go to Marketing > Lead Capture > Forms. For any forms used for lead magnets or webinars, edit the email field to \"Require work email only\" (available on Pro+). This will block future submissions from freemail domains.\n\nWATCH FOR: You'll still need a plan for existing freemail contacts. Don't try to manually guess their company; it's a huge time sink and often wrong. Focus on getting a valid work email through re-engagement campaigns or enrichment."
     }
   ],
-  "executive_summary": "This instance is functional but leaking accuracy. The high-severity issues share a pattern: records are entering the CRM without ownership or dedup gates, then nobody circles back. Fixing intake first, then cleaning historical records, prevents the same issues from rebuilding.\n\n1. Likely duplicate contacts detected — start here.\n2. Contacts missing owner assignment — start here.\n3. Inactive workflows still marked active — schedule this week."
+  "executive_summary": "This HubSpot instance is in a foundational state, with a clear need for immediate data hygiene improvements. The most critical underlying theme is a lack of clear ownership and data standards, leading to a messy dataset that hinders reliable reporting and effective outreach.\n\n1. Resolve duplicate contacts.\n2. Assign owners to unassigned contacts.\n3. Clean up stale deals and inactive workflows."
 }

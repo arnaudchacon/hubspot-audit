@@ -38,14 +38,21 @@ function parseRetryDelayMs(message: string): number {
   return Math.min(Math.ceil(seconds + 2), 55) * 1000;
 }
 
-export async function generateRecommendation(prompt: string, retries = 2): Promise<string> {
+export async function generateRecommendation(prompt: string, retries = 3): Promise<string> {
   try {
     const result = await getModel().generateContent(prompt);
     return result.response.text().trim();
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     if (retries > 0 && message.includes('429')) {
+      // Rate limited — honor the API's stated retry delay.
       await sleep(parseRetryDelayMs(message));
+      return generateRecommendation(prompt, retries - 1);
+    }
+    if (retries > 0 && message.includes('503')) {
+      // Transient "model overloaded" — no delay hint in the body, so back off
+      // a few seconds and try again.
+      await sleep(4000);
       return generateRecommendation(prompt, retries - 1);
     }
     throw err;
